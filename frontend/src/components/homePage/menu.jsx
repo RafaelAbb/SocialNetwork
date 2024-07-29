@@ -2,8 +2,11 @@ import React, { useState, useRef } from 'react';
 import ProfilePage from './profilePage';
 import GraphComponent from './GraphComponent';
 import DarkLight from '../DarkLight';
+import Logout from '../common/Logout';
 
-const Home = () => {
+
+
+const Home = ({ onLogout }) => {
   const [currentView, setCurrentView] = useState('home');
   const syncRef = useRef(null); // Reference for the sync checkbox
 
@@ -34,6 +37,7 @@ const Home = () => {
 
   return (
     <div>
+      <Logout onLogout={onLogout} />
       <div id="menu" className={menuStyle}>
         {menuItems.map(item => (
           <button
