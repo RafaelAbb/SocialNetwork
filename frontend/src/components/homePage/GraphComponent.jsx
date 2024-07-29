@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { DataSet, Network } from 'vis-network/standalone';
-import { getGraphOptions, getEdgeColor, getMe, getUsers } from './Utilities';
+import { getGraphOptions, getEdgeColor, getMe, getUsers } from './GraphOptions';
 import FilterButtons from './FilterButtons';
 import Legend from './Legend';
-import {classifyUsers, classifySpecificUser} from './users';
+import { classifyUsers, classifySpecificUser } from './Users';
 
 const GraphComponent = () => {
   const [users, setUsers] = useState([]);
@@ -18,14 +18,14 @@ const GraphComponent = () => {
   useEffect(() => {
     const renderGraph = (users, filter) => {
       let container = document.getElementById('network-graph');
-      console.log("container:")
-      console.log(container)
+      console.log("container:");
+      console.log(container);
 
       if (!container) {
         container = document.createElement('div');
         container.id = 'network-graph';
         document.body.appendChild(container);
-        console.log("Not container")
+        console.log("Not container");
       }
 
       const me = getMe();
