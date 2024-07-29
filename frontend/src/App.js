@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Header from './components/header.jsx';
-import SignInPage from './components/signInPage/SignIn.jsx';
-import Home from './components/homePage/menu.jsx'; // Import the Home component
+import Header from './components/Header';
+import SignInPage from './components/signInPage/SignIn';
+import Menu from './components/common/Menu'; // Import the Home component
 import './index.css'; // Ensure this is the correct path
-import DarkLight from './components/DarkLight.jsx';
+import DarkLight from './components/DarkLight';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,7 +25,7 @@ function App() {
       {!isAuthenticated ? (
         <SignInPage onSignInClick={handleSignInClick} />
       ) : (
-        <Home onLogout={handleLogout} />
+        <Menu onLogout={handleLogout} />
       )}
     </div>
   );
