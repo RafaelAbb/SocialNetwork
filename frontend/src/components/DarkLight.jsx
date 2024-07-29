@@ -21,7 +21,7 @@ const DarkLight = ({ sync }) => {
   return (
     <button
       id="dark-light-toggle"
-      className={`px-3 py-1.5 m-2 text-lg rounded ${
+      className={`absolute top-4 left-4 px-3 py-1.5 text-lg rounded ${
         darkMode ? 'bg-gray-800 text-white' : 'bg-blue-500 text-white'
       } hover:${
         darkMode ? 'bg-gray-700' : 'bg-blue-600'
