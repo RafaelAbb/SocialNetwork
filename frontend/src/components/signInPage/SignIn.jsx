@@ -3,11 +3,33 @@ import RegisterForm from '../registerPage/RegisterForm';
 
 const SignInPage = ({ onSignInClick }) => {
   const [showRegister, setShowRegister] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const SignInUser = () => {
-    // Call the function passed from App component
-    onSignInClick();
+  const SignInUser = async (e) => {
+    e.preventDefault(); // Prevent form default submission behavior
+    const url = `https://web-course-backend-seven.vercel.app/api/check-password?id_num=${username}&password=${password}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+      });
+  
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data); // Handle the response data as needed
+        onSignInClick();
+      } else if (response.status === 401) {
+        console.error('Error: Unauthorized. Incorrect username or password.');
+      } else if (response.status === 404) {
+        console.error('Error: Not Found. The requested resource could not be found.');
+      } else {
+        console.error('Error: An unexpected error occurred.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
 
   const signInStyle = {
     textAlign: 'center',
@@ -32,6 +54,8 @@ const SignInPage = ({ onSignInClick }) => {
               type="text"
               placeholder="Username"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -42,8 +66,10 @@ const SignInPage = ({ onSignInClick }) => {
             <input
               id="password"
               type="password"
-              placeholder="******************"
+              placeholder="********"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
