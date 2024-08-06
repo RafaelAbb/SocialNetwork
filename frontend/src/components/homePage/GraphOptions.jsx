@@ -1,3 +1,7 @@
+// src/common/GraphOptions.js
+import { DataSet } from 'vis-network/standalone';
+
+// Function to get graph options
 export const getGraphOptions = () => ({
   nodes: {
     shape: 'dot',
@@ -41,55 +45,81 @@ export const getGraphOptions = () => ({
     improvedLayout: true,
   },
 });
-  
-  export const getEdgeColor = (key) => {
-    switch (key) {
-      case 'workplace': return 'orange';
-      case 'hobby': return 'green';
-      case 'state': return 'purple';
-      default: return 'gray';
-    }
-  };
 
-  export const getMe =()=>{ return {
-    id_num: '000000000',
-    firstName: 'Me',
-    lastName: '',
-    workplace: 'Tech Company Inc.',
-    hobby: 'Reading',
-    state: 'New York'
-  };
-}
+// Function to get edge color based on attribute
+export const getEdgeColor = (key) => {
+  switch (key) {
+    case 'workplace': return 'orange';
+    case 'hobby': return 'green';
+    case 'state': return 'purple';
+    default: return 'gray';
+  }
+};
 
+// Function to classify users based on common attributes
+export const classifyUsers = (users) => {
+  const commonAttributes = ['hobby', 'state', 'workplace'];
+  const attributeDict = {};
 
+  // Initialize dictionary with attributes as keys and empty objects as values
+  commonAttributes.forEach(attr => {
+    attributeDict[attr] = {};
+  });
 
-export const getUsers = () =>{
-  return [
-    {
-      "firstName": "John",
-      "lastName": "Doe",
-      "birthday": "1990-01-01",
-      "workplace": "Tech Company Inc.",
-      "email": "john.doe@example.com",
-      "country": "United States",
-      "city": "New York",
-      "state": "New York",
-      "gender": "Male",
-      "id_num": "123456789",
-      "hobby": "Reading"
-    },
-    {
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "birthday": "1985-05-15",
-      "workplace": "Tech Company Inc.",
-      "email": "jane.smith@example.com",
-      "country": "Canada",
-      "city": "Toronto",
-      "state": "New York",
-      "gender": "Female",
-      "id_num": "987654321",
-      "hobby": "Hiking"
-    },
-  ]
-}
+  // Classify users based on common attributes
+  users.forEach(user => {
+    commonAttributes.forEach(attr => {
+      const userAttributeValue = user[attr];
+      if (userAttributeValue) { // Ensure the attribute value is not null or undefined
+        if (!attributeDict[attr][userAttributeValue]) {
+          attributeDict[attr][userAttributeValue] = [];
+        }
+        attributeDict[attr][userAttributeValue].push(user);
+      }
+    });
+  });
+
+  return attributeDict;
+};
+
+// Function to classify a specific user's connections by common attributes
+export const classifySpecificUser = (classifiedUsers, user) => {
+  if (!user) { // Check if the user object is defined
+    return {
+      commonHobby: [],
+      commonState: [],
+      commonWorkplace: [],
+    };
+  }
+
+  // Extract common hobby, state, and workplace connections
+  const commonHobby = (classifiedUsers['hobby'] && classifiedUsers['hobby'][user.hobby]) || [];
+  const commonState = (classifiedUsers['state'] && classifiedUsers['state'][user.state]) || [];
+  const commonWorkplace = (classifiedUsers['workplace'] && classifiedUsers['workplace'][user.workplace]) || [];
+
+  return { commonHobby, commonState, commonWorkplace };
+};
+
+// Function to create nodes for the graph
+export const createNodes = (users, me) => {
+  return new DataSet([
+    ...users.map(user => ({
+      id: user.id_num,
+      label: `${user.firstName} ${user.lastName}`
+    })),
+    { id: me.id_num, label: 'Me', color: { background: 'red', border: 'black' }, size: 30 }
+  ]);
+};
+
+// Function to create an edge between two users with a specified color
+export const connectEdge = (edges, user1, user2, color) => {
+  edges.add({ from: user1.id_num, to: user2.id_num, color: { color, inherit: false, opacity: 2 } });
+};
+
+// Function to add edges to 'me' from a list of users
+export const addEdgesToMe = (edges, me, users, color) => {
+  if (!users) return;
+  users.forEach(user => {
+    connectEdge(edges, me, user, color);
+  });
+};

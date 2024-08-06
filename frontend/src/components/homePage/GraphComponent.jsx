@@ -1,9 +1,9 @@
+// src/components/homePage/GraphComponent.js
 import React, { useEffect, useState } from 'react';
 import { DataSet, Network } from 'vis-network/standalone';
-import { getGraphOptions, getEdgeColor } from './GraphOptions';
+import { getGraphOptions, getEdgeColor, classifyUsers, classifySpecificUser, createNodes, addEdgesToMe } from './GraphOptions';
 import FilterButtons from './FilterButtons';
 import Legend from './Legend';
-import { classifyUsers, classifySpecificUser } from './Users';
 import { getMe, getUsers } from '../common/User';
 
 // Main graph component
@@ -48,48 +48,25 @@ const GraphComponent = () => {
       // Classify users by hobby, state, and workplace
       const classifiedUsers = classifyUsers(users);
 
-      // Function to create an edge between two users with a specified color
-      const connectEdge = (user1, user2, color) => {
-        edges.add({ from: user1.id_num, to: user2.id_num, color: { color, inherit: false, opacity: 2 } });
-      };
-
-      // Function to add edges to 'me' from a list of users
-      const addEdgesToMe = (users, color) => {
-        if (!users) return;
-        users.forEach(user => {
-          connectEdge(me, user, color);
-        });
-      };
-
-      // Function to create nodes for the graph
-      const createNodes = () => {
-        return new DataSet([
-          ...users.map(user => ({
-            id: user.id_num,
-            label: `${user.firstName} ${user.lastName}`
-          })),
-          { id: me.id_num, label: 'Me', color: { background: 'red', border: 'black' }, size: 30 }
-        ]);
-      };
+      // Create nodes for the graph
+      const nodes = createNodes(users, me);
+      const edges = new DataSet(); // Create edges for the graph
 
       // Get classified users specific to 'me'
       const { commonHobby, commonState, commonWorkplace } = classifySpecificUser(classifiedUsers, me);
 
-      const nodes = createNodes(); // Create nodes for the graph
-      const edges = new DataSet(); // Create edges for the graph
-
       // Add edges based on the current filter
       if (filter === 'all') {
-        addEdgesToMe(commonHobby, getEdgeColor('hobby'));
-        addEdgesToMe(commonState, getEdgeColor('state'));
-        addEdgesToMe(commonWorkplace, getEdgeColor('workplace'));
+        addEdgesToMe(edges, me, commonHobby, getEdgeColor('hobby'));
+        addEdgesToMe(edges, me, commonState, getEdgeColor('state'));
+        addEdgesToMe(edges, me, commonWorkplace, getEdgeColor('workplace'));
       } else {
         if (filter === 'hobby') {
-          addEdgesToMe(commonHobby, getEdgeColor('hobby'));
+          addEdgesToMe(edges, me, commonHobby, getEdgeColor('hobby'));
         } else if (filter === 'state') {
-          addEdgesToMe(commonState, getEdgeColor('state'));
+          addEdgesToMe(edges, me, commonState, getEdgeColor('state'));
         } else if (filter === 'workplace') {
-          addEdgesToMe(commonWorkplace, getEdgeColor('workplace'));
+          addEdgesToMe(edges, me, commonWorkplace, getEdgeColor('workplace'));
         }
       }
 
