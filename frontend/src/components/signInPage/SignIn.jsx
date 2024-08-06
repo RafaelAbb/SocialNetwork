@@ -5,35 +5,31 @@ const SignInPage = ({ onSignInClick }) => {
   const [showRegister, setShowRegister] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const SignInUser = async (e) => {
     e.preventDefault(); // Prevent form default submission behavior
-    const url = `https://web-course-backend-seven.vercel.app/api/check-password?id_num=${username}&password=${password}`;
+    const url = `https://web-course-backend-seven.vercel.app/api/login?id_num=${username}&password=${password}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
       });
-  
+
       if (response.status === 200) {
         const data = await response.json();
         console.log(data); // Handle the response data as needed
+        setMessage('Sign in successful!');
         onSignInClick();
       } else if (response.status === 401) {
-        console.error('Error: Unauthorized. Incorrect username or password.');
+        setMessage('Error: Unauthorized. Incorrect username or password.');
       } else if (response.status === 404) {
-        console.error('Error: Not Found. The requested resource could not be found.');
+        setMessage('Error: Unauthorized. Incorrect username or password.');
       } else {
-        console.error('Error: An unexpected error occurred.');
+        setMessage('Error: An unexpected error occurred.');
       }
     } catch (error) {
-      console.error('Error:', error);
+      setMessage(`Error: ${error.message}`);
     }
-  };
-  
-
-  const signInStyle = {
-    textAlign: 'center',
-    marginTop: '0.5rem', // Reduced marginTop
   };
 
   const SignUpClicked = (e) => {
@@ -72,6 +68,14 @@ const SignInPage = ({ onSignInClick }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
+          {message && (
+            <div className="mb-4">
+              <p className={`text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
+                {message}
+              </p>
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <button

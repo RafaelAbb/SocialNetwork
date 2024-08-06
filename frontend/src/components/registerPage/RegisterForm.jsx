@@ -4,6 +4,7 @@ const RegisterForm = () => {
   // State for form fields
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
@@ -11,35 +12,45 @@ const RegisterForm = () => {
   const [city, setCity] = useState('');
   const [work, setWork] = useState('');
   const [gender, setGender] = useState('');
-
-  // Function to display messages
-  const showMessage = (message, type) => {
-    alert(`${type}: ${message}`);
-  };
-
-  // Function to register a new user
-  const registerUser = (username, password) => {
-    // Check if username already exists
-    if (localStorage.getItem(username)) {
-      showMessage('Username already exists!', 'Error');
-      return false;
-    }
-    // Store user credentials
-    localStorage.setItem(username, password);
-    showMessage('User registered successfully!', 'Success');
-    return true;
-  };
+  const [hobby, setHobby] = useState('');
+  const [message, setMessage] = useState('');
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent form from refreshing the page
 
-    // Example: using ID as the username
-    const username = id;
-    const userPassword = password;
+    const payload = {
+      newFirstName: firstName,
+      newLastName: lastName,
+      newEmail: email,
+      newIdNum: id,
+      newCountry: state,
+      newCity: city,
+      newWorkplace: work,
+      newHobby: hobby,
+      newGender: gender,
+      newPassword: password
+    };
 
-    // Register user
-    registerUser(username, userPassword);
+    try {
+      const response = await fetch('https://web-course-backend-seven.vercel.app/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      console.log(response)
+      if (response.ok) {
+        const data = await response.json();
+        setMessage('User registered successfully!');
+      } else {
+        const errorData = await response.json();
+        setMessage(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.message}`);
+    }
   };
 
   return (
@@ -64,6 +75,16 @@ const RegisterForm = () => {
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="grid-last-name" type="text" placeholder="Doe"
               value={lastName} onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="w-full px-3 mb-6">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
+              Email
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              id="grid-email" type="email" placeholder="jane.doe@example.com"
+              value={email} onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="w-full px-3 mb-6">
@@ -109,7 +130,6 @@ const RegisterForm = () => {
                 <option>USA</option>
                 <option>UK</option>
               </select>
-
             </div>
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -147,6 +167,16 @@ const RegisterForm = () => {
               </select>
             </div>
           </div>
+          <div className="w-full px-3 mb-6">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-hobby">
+              Hobby
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              id="grid-hobby" type="text" placeholder="Reading, Traveling, etc."
+              value={hobby} onChange={(e) => setHobby(e.target.value)}
+            />
+          </div>
           <div className="w-full flex items-center justify-between mt-4 px-3">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -156,6 +186,13 @@ const RegisterForm = () => {
             </button>
           </div>
         </div>
+        {message && (
+          <div className="mt-4">
+            <p className={`text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
+              {message}
+            </p>
+          </div>
+        )}
       </form>
     </div>
   );
