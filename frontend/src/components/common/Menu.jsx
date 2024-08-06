@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ProfilePage from '../profilePage/ProfilePage';
 import GraphComponent from '../homePage/GraphComponent';
-import DarkLight from '../DarkLight';
 import Logout from './Logout';
 
 

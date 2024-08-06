@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import RegisterForm from '../registerPage/RegisterForm';
+import Cookies from 'js-cookie';
 
 const SignInPage = ({ onSignInClick }) => {
   const [showRegister, setShowRegister] = useState(false);
@@ -8,32 +9,33 @@ const SignInPage = ({ onSignInClick }) => {
 
   const SignInUser = async (e) => {
     e.preventDefault(); // Prevent form default submission behavior
-    const url = `https://web-course-backend-seven.vercel.app/api/check-password?id_num=${username}&password=${password}`;
+    const url = `https://web-course-backend-seven.vercel.app/api/login?id_num=${username}&password=${password}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
       });
-  
+
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data); // Handle the response data as needed
+        console.log("Data from server: ", data);
+        // Store the JSON response as a cookie with 1 hour expiration
+        Cookies.set('userData', JSON.stringify(data), { expires: 1 / 24, path: '/' });
+
         onSignInClick();
       } else if (response.status === 401) {
         console.error('Error: Unauthorized. Incorrect username or password.');
+        alert('Incorrect username or password. Please try again.');
       } else if (response.status === 404) {
         console.error('Error: Not Found. The requested resource could not be found.');
+        alert('The requested resource could not be found.');
       } else {
         console.error('Error: An unexpected error occurred.');
+        alert('An unexpected error occurred. Please try again later.');
       }
     } catch (error) {
       console.error('Error:', error);
+      alert('An error occurred while trying to sign in. Please check your network connection and try again.');
     }
-  };
-  
-
-  const signInStyle = {
-    textAlign: 'center',
-    marginTop: '0.5rem', // Reduced marginTop
   };
 
   const SignUpClicked = (e) => {
@@ -81,25 +83,28 @@ const SignInPage = ({ onSignInClick }) => {
             >
               Sign In
             </button>
-            <a
-              href="#"
+            <button
+              type="button"
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              onClick={() => alert('Forgot Password functionality is not implemented yet.')}
+              style={{ background: 'none', border: 'none', padding: '0', cursor: 'pointer', textDecoration: 'underline' }}
             >
               Forgot Password?
-            </a>
+            </button>
           </div>
 
           <div className="flex items-center justify-between p-4 bg-gray-100 mt-2">
             <label className="block text-gray-700 text-sm font-bold">
               Not a member?
             </label>
-            <a
-              href="#"
+            <button
+              type="button"
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               onClick={SignUpClicked}
+              style={{ background: 'none', border: 'none', padding: '0', cursor: 'pointer', textDecoration: 'underline' }}
             >
               Sign Up
-            </a>
+            </button>
           </div>
         </form>
       ) : (
