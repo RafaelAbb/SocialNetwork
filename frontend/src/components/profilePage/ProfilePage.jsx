@@ -1,24 +1,33 @@
-
-// src/App.js (or wherever your ProfilePage component is located)
-import React from 'react';
-import UsersList from './UsersList';
+// src/components/profilePage/ProfilePage.jsx
+import React, { useEffect, useState } from 'react';
+import { getMe, getUsers } from '../common/User';
+import UserProfile from './UserProfile';
+import ConnectionsList from './ConnectionsList';
 
 const ProfilePage = () => {
+  const [user, setUser] = useState(null);
+  const [connections, setConnections] = useState([]);
+
+  useEffect(() => {
+    // Fetch user profile
+    const me = getMe();
+    setUser(me);
+
+    // Fetch user's connections
+    const userConnections = getUsers();
+    setConnections(userConnections);
+  }, []);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="flex flex-row justify-center items-center gap-4 mt-4">
-      <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4">User Profile</h1>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Full Name: John Doe</label>
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">ID: 123456789</label>
-        </div>
-        <UsersList />
-      </div>
+    <div className="flex flex-col items-center gap-4 mt-4">
+      <UserProfile user={user} />
+      <ConnectionsList connections={connections} />
     </div>
   );
 };
 
 export default ProfilePage;
-
