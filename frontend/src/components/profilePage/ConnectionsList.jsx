@@ -7,7 +7,7 @@ const ConnectionsList = ({ connections }) => {
     <div className="bg-white text-gray-800 rounded-lg shadow-md p-6 w-full max-w-md mt-4">
       <h2 className="text-2xl font-bold mb-4">Connections</h2>
       {connections.length > 0 ? (
-        <ul>
+        <ul className="space-y-4">
           {connections.map(connection => (
             <ConnectionItem key={connection.id_num} connection={connection} />
           ))}

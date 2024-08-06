@@ -1,23 +1,12 @@
 // src/components/profilePage/UserProfile.jsx
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMars, faVenus, faGenderless } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import GenderIcon from './GenderIcon';
 
 dayjs.extend(relativeTime);
 
 const UserProfile = ({ user }) => {
-  const getGenderIcon = (gender) => {
-    if (gender.toLowerCase() === 'male') {
-      return <FontAwesomeIcon icon={faMars} className="text-blue-500" />;
-    } else if (gender.toLowerCase() === 'female') {
-      return <FontAwesomeIcon icon={faVenus} className="text-pink-500" />;
-    } else {
-      return <FontAwesomeIcon icon={faGenderless} className="text-gray-500" />;
-    }
-  };
-
   const calculateRemainingTime = (birthday) => {
     const nextBirthday = dayjs(birthday).year(dayjs().year());
     if (nextBirthday.isBefore(dayjs())) {
@@ -28,7 +17,9 @@ const UserProfile = ({ user }) => {
 
   return (
     <div className="bg-blue-100 text-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
-      <h1 className="text-3xl font-bold mb-4 text-center">User Profile {getGenderIcon(user.gender)}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">
+        User Profile <GenderIcon gender={user.gender} />
+      </h1>
       <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Full Name:</label>
         <p className="text-md">{user.firstName} {user.lastName}</p>
