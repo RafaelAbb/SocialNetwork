@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import ProfilePage from '../profilePage/ProfilePage';
-import GraphComponent from '../homePage/GraphComponent';
-import Logout from './Logout';
+import React, { useState, useRef } from 'react';
+import ProfilePage from './profilePage';
+import GraphComponent from './GraphComponent';
+import DarkLight from '../DarkLight';
 
-
-
-const Menu = ({ onLogout }) => {
+const Home = () => {
   const [currentView, setCurrentView] = useState('home');
+  const syncRef = useRef(null); // Reference for the sync checkbox
 
   const menuStyle = 'flex flex-row items-center pb-8 pr-8 pl-8 rounded-lg place-content-center';
   const menuItemStyle = 'menu-item bg-gray-200 p-2 rounded-lg shadow-lg mr-3 ml-3 bg-white text-slate-700 hover:ease-in text-blue-500 hover:ease-in duration-400';
@@ -29,13 +28,12 @@ const Menu = ({ onLogout }) => {
       case 'contact':
         return <div>Contact Page</div>;
       default:
-        return <div>123</div>
+        return <GraphComponent />;
     }
   };
 
   return (
     <div>
-      <Logout onLogout={onLogout} />
       <div id="menu" className={menuStyle}>
         {menuItems.map(item => (
           <button
@@ -55,4 +53,4 @@ const Menu = ({ onLogout }) => {
   );
 };
 
-export default Menu;
+export default Home;

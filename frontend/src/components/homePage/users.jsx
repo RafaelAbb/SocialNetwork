@@ -1,36 +1,47 @@
-
+// Function to classify users based on common attributes
 export const classifyUsers = (users) => {
-    console.log("Classifying users:", users); // Log users to be classified
-    const commonAttributes = ['hobby', 'state', 'workplace'];
-    const attributeDict = {};
+  const commonAttributes = ['hobby', 'state', 'workplace'];
+  const attributeDict = {};
 
-    // Initialize dictionary with attributes as keys and empty arrays as values
+  // Initialize dictionary with attributes as keys and empty objects as values
+  commonAttributes.forEach(attr => {
+    attributeDict[attr] = {};
+  });
+
+  // Classify users based on common attributes
+  users.forEach(user => {
     commonAttributes.forEach(attr => {
-      attributeDict[attr] = {};
-    });
-
-    // Classify users based on common attributes
-    users.forEach(user => {
-      commonAttributes.forEach(attr => {
-        const userAttributeValue = user[attr];
-        if (userAttributeValue) {
-          if (!attributeDict[attr][userAttributeValue]) {
-            attributeDict[attr][userAttributeValue] = [];
-          }
-          attributeDict[attr][userAttributeValue].push(user);
+      const userAttributeValue = user[attr];
+      if (userAttributeValue) { // Ensure the attribute value is not null or undefined
+        if (!attributeDict[attr][userAttributeValue]) {
+          attributeDict[attr][userAttributeValue] = [];
         }
-      });
+        attributeDict[attr][userAttributeValue].push(user);
+      }
     });
+  });
 
-    return attributeDict;
-  };
+  return attributeDict;
+};
 
 
+
+// Function to classify a specific user's connections by common attributes
 export const classifySpecificUser = (classifiedUsers, user) => {
-    const commonHobby = classifiedUsers['hobby'][user.hobby];
-    const commonState = classifiedUsers['state'][user.state];
-    const commonWorkplace = classifiedUsers['workplace'][user.workplace];
+  if (!user) { // Check if the user object is defined
+    return {
+      commonHobby: [],
+      commonState: [],
+      commonWorkplace: [],
+    };
+  }
 
-    return { commonHobby, commonState, commonWorkplace };
-  };
+  // Extract common hobby, state, and workplace connections
+  const commonHobby = (classifiedUsers['hobby'] && classifiedUsers['hobby'][user.hobby]) || [];
+  const commonState = (classifiedUsers['state'] && classifiedUsers['state'][user.state]) || [];
+  const commonWorkplace = (classifiedUsers['workplace'] && classifiedUsers['workplace'][user.workplace]) || [];
+
+  return { commonHobby, commonState, commonWorkplace };
+};
+
 
