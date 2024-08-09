@@ -6,6 +6,7 @@ const SignInPage = ({ onSignInClick }) => {
   const [showRegister, setShowRegister] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const SignInUser = async (e) => {
     e.preventDefault(); // Prevent form default submission behavior
@@ -35,6 +36,7 @@ const SignInPage = ({ onSignInClick }) => {
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred while trying to sign in. Please check your network connection and try again.');
+
     }
   };
 
@@ -74,6 +76,14 @@ const SignInPage = ({ onSignInClick }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
+          {message && (
+            <div className="mb-4">
+              <p className={`text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
+                {message}
+              </p>
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <button

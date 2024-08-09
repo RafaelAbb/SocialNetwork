@@ -29,7 +29,7 @@ const Menu = ({ onLogout }) => {
       case 'contact':
         return <div>Contact Page</div>;
       default:
-        return <GraphComponent />;
+        return <div>123</div>
     }
   };
 
