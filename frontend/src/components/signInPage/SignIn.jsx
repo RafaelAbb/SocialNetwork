@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RegisterForm from '../registerPage/RegisterForm';
 import Cookies from 'js-cookie';
+import DarkLight from '../../components/DarkLight';
 
 const SignInPage = ({ onSignInClick }) => {
   const [showRegister, setShowRegister] = useState(false);
@@ -36,7 +37,6 @@ const SignInPage = ({ onSignInClick }) => {
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred while trying to sign in. Please check your network connection and try again.');
-
     }
   };
 
@@ -46,24 +46,25 @@ const SignInPage = ({ onSignInClick }) => {
   };
 
   return (
-    <div className="flex flex-row justify-center items-center gap-4 min-h-screen">
+    <div className="flex flex-row justify-center items-center gap-4 min-h-screen ">
+      <DarkLight /> {/* Include the DarkLight component */}
       {!showRegister ? (
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-6 mt-6">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="username">
               Username
             </label>
             <input
               id="username"
               type="text"
               placeholder="Username"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 ">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
@@ -71,7 +72,7 @@ const SignInPage = ({ onSignInClick }) => {
               id="password"
               type="password"
               placeholder="********"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline  dark:text-gray-200 text-xs font-bold mb-2"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
