@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import DarkLight from '../DarkLight';
-import SignInPage from '../signInPage/SignIn'
+//import SignInPage from '../signInPage/SignIn'
+import CountryDropdown from './CountryDropdown'
+import WorkDropdown from './WorkDropdown';
+import HobbyDropdown from './HobbyDropdown';
 
 
 const RegisterForm = () => {
@@ -12,7 +15,6 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
   const [work, setWork] = useState('');
   const [gender, setGender] = useState('');
   const [hobby, setHobby] = useState('');
@@ -31,7 +33,6 @@ const RegisterForm = () => {
       "newEmail": email,
       "newIdNum": id,
       "newCountry": country,
-      "newCity": city,
       "newWorkplace": work,
       "newHobby": hobby,
       "newGender": gender,
@@ -118,21 +119,12 @@ const RegisterForm = () => {
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
-              id="grid-password" type="password" placeholder="******************"
+              id="grid-password" type="password" placeholder="*********"
               value={password} onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           {/* Hobby */}
-          <div className="w-full px-3 mb-6">
-            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-hobby">
-              Hobby
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600"
-              id="grid-hobby" type="text" placeholder="Reading, Traveling, etc."
-              value={hobby} onChange={(e) => setHobby(e.target.value)}
-            />
-          </div>
+          <HobbyDropdown/>
           {/* Birthday */}
           <div className="w-full px-3 mb-6">
             <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-birthdate">
@@ -145,44 +137,9 @@ const RegisterForm = () => {
             />
           </div>
           {/* Country */}
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-country">
-              Country
-            </label>
-            <div className="relative">
-              <select
-                className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
-                id="grid-country" type="text"
-                value={country} onChange={(e) => setCountry(e.target.value)}
-              >
-                <option>Israel</option>
-                <option>USA</option>
-                <option>UK</option>
-              </select>
-            </div>
-          </div>
-          {/* City */}
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-city">
-              City
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600"
-              id="grid-city" type="text" placeholder="Karmiel"
-              value={city} onChange={(e) => setCity(e.target.value)}
-            />
-          </div>
+          <CountryDropdown />
           {/* Work */}
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-work">
-              Work
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600"
-              id="grid-work" type="text" placeholder="Rafael"
-              value={work} onChange={(e) => setWork(e.target.value)}
-            />
-          </div>
+          <WorkDropdown/>
           {/* Gender */}
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-gender">
@@ -195,7 +152,6 @@ const RegisterForm = () => {
               >
                 <option>Female</option>
                 <option>Male</option>
-                <option>Other</option>
               </select>
             </div>
           </div>
