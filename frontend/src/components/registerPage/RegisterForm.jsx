@@ -3,7 +3,7 @@ import DarkLight from '../DarkLight';
 //import SignInPage from '../signInPage/SignIn'
 import CountryDropdown from './CountryDropdown'
 import WorkDropdown from './WorkDropdown';
-import HobbyDropdown from './HobbyDropdown';
+import HobbyDropdown from './HobbyDropdown.jsx';
 
 
 const RegisterForm = () => {
@@ -22,6 +22,9 @@ const RegisterForm = () => {
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
+
+    alert(`The user: ${work} ${hobby} ${country} ${firstName}`)
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     event.preventDefault();
@@ -39,6 +42,8 @@ const RegisterForm = () => {
       "newPassword": password,
       "newBirthdate": birthdate
     });
+
+
   
     var requestOptions = {
       method: 'POST',
@@ -124,7 +129,7 @@ const RegisterForm = () => {
             />
           </div>
           {/* Hobby */}
-          <HobbyDropdown/>
+          <HobbyDropdown onChange={(e) => setHobby(e.target.value)}/>
           {/* Birthday */}
           <div className="w-full px-3 mb-6">
             <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-birthdate">
@@ -137,9 +142,9 @@ const RegisterForm = () => {
             />
           </div>
           {/* Country */}
-          <CountryDropdown />
+          <CountryDropdown onChange={(e) => setCountry(e.target.value)} />
           {/* Work */}
-          <WorkDropdown/>
+          <WorkDropdown onChange={(e) => setWork(e.target.value)}/>
           {/* Gender */}
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-200 text-xs font-bold mb-2" htmlFor="grid-gender">

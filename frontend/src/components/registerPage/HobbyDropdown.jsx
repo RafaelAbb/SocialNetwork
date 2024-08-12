@@ -5,7 +5,7 @@ const getHobbies = () => {
   return ['Reading', 'Traveling', 'Cooking', 'Gaming']; // Replace this with actual fetch or logic to retrieve hobby options
 };
 
-const HobbyDropdown = () => {
+const HobbyDropdown = ({onChange}) => {
   const [hobby, setHobby] = useState('');
   const [hobbies, setHobbies] = useState([]);
 
@@ -14,6 +14,13 @@ const HobbyDropdown = () => {
     const hobbyList = getHobbies();
     setHobbies(hobbyList);
   }, []);
+
+  const handleChange = (e) => {
+    setHobby(e.target.value);
+    if (onChange) {
+      onChange(e); // Call the passed onChange prop to notify the parent component
+    }
+  };
 
   return (
     <div className="w-full px-3 mb-6">
@@ -28,8 +35,9 @@ const HobbyDropdown = () => {
           className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
           id="grid-hobby"
           value={hobby}
-          onChange={(e) => setHobby(e.target.value)}
+          onChange={handleChange}
         >
+          <option value="" disabled>Select Hobby</option> {/*placeholder */}
           {hobbies.map((hobbyName, index) => (
             <option key={index} value={hobbyName}>
               {hobbyName}

@@ -5,7 +5,7 @@ const getWorkOptions = () => {
   return ['Developer', 'Designer', 'Manager']; // Replace this with actual fetch or logic to retrieve work options
 };
 
-const WorkDropdown = () => {
+const WorkDropdown = ({onChange}) => {
   const [work, setWork] = useState('');
   const [workOptions, setWorkOptions] = useState([]);
 
@@ -14,6 +14,13 @@ const WorkDropdown = () => {
     const options = getWorkOptions();
     setWorkOptions(options);
   }, []);
+
+  const handleChange = (e) => {
+    setWork(e.target.value);
+    if (onChange) {
+      onChange(e); // Call the passed onChange prop to notify the parent component
+    }
+  };
 
   return (
     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -28,8 +35,9 @@ const WorkDropdown = () => {
           className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
           id="grid-work"
           value={work}
-          onChange={(e) => setWork(e.target.value)}
+          onChange={handleChange}  // Use the internal handleChange method
         >
+          <option value="" disabled>Select Work</option> {/*placeholder */}
           {workOptions.map((workOption, index) => (
             <option key={index} value={workOption}>
               {workOption}
