@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProfilePage from '../profilePage/ProfilePage';
 import GraphComponent from '../homePage/GraphComponent';
+import About from '../aboutPage/About';
 import Logout from './Logout';
 
 
@@ -25,7 +26,7 @@ const Menu = ({ onLogout }) => {
       case 'home':
         return <GraphComponent />;
       case 'about':
-        return <div>About Page</div>;
+        return <About />;
       case 'contact':
         return <div>Contact Page</div>;
       default:
