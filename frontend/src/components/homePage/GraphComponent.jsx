@@ -45,7 +45,7 @@ const GraphComponent = () => {
         return;
       }
 
-      // Classify users by hobby, state, and workplace
+      // Classify users by hobby, country, and workplace
       const classifiedUsers = classifyUsers(users);
 
       // Create nodes for the graph
@@ -53,18 +53,18 @@ const GraphComponent = () => {
       const edges = new DataSet(); // Create edges for the graph
 
       // Get classified users specific to 'me'
-      const { commonHobby, commonState, commonWorkplace } = classifySpecificUser(classifiedUsers, me);
+      const { commonHobby, commonCountry, commonWorkplace } = classifySpecificUser(classifiedUsers, me);
 
       // Add edges based on the current filter
       if (filter === 'all') {
         addEdgesToMe(edges, me, commonHobby, getEdgeColor('hobby'));
-        addEdgesToMe(edges, me, commonState, getEdgeColor('state'));
+        addEdgesToMe(edges, me, commonCountry, getEdgeColor('country'));
         addEdgesToMe(edges, me, commonWorkplace, getEdgeColor('workplace'));
       } else {
         if (filter === 'hobby') {
           addEdgesToMe(edges, me, commonHobby, getEdgeColor('hobby'));
-        } else if (filter === 'state') {
-          addEdgesToMe(edges, me, commonState, getEdgeColor('state'));
+        } else if (filter === 'country') {
+          addEdgesToMe(edges, me, commonCountry, getEdgeColor('country'));
         } else if (filter === 'workplace') {
           addEdgesToMe(edges, me, commonWorkplace, getEdgeColor('workplace'));
         }
