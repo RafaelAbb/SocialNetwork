@@ -38,11 +38,6 @@ const SignInPage = ({ onSignInClick }) => {
     }
   };
 
-  const signInStyle = {
-    textAlign: 'center',
-    marginTop: '0.5rem',
-  };
-
   const SignUpClicked = (e) => {
     e.preventDefault();
     setShowRegister(true);

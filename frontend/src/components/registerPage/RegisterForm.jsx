@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import DarkLight from '../../components/DarkLight';
+import DarkLight from '../DarkLight';
+import SignInPage from '../signInPage/SignIn'
 
 
 const RegisterForm = () => {
@@ -52,8 +53,8 @@ const RegisterForm = () => {
       if (response.status !== 200) {
         setMessage(`Error: ${result}`);
       } else {
-        window.location.reload();
-        sessionStorage.setItem('registerMessage', 'Registration successful! You can now sign in.');
+        alert('registerMessage', 'Registration successful! You can now sign in.');
+        //sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
       }
     } catch (error) {
       setMessage('Error: Registration failed. Please try again later.');
