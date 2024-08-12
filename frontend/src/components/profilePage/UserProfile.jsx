@@ -38,6 +38,10 @@ const UserProfile = ({ user }) => {
         <p className="text-md text-gray-600">({calculateDaysRemaining(user.birthday)} days remaining)</p>
       </div>
       <div className="mb-4">
+        <label className="block text-lg font-bold mb-2">Hobby:</label>
+        <p className="text-md">{user.hobby}</p>
+      </div>
+      <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Country:</label>
         <p className="text-md">{user.country}, {user.city}</p>
       </div>
