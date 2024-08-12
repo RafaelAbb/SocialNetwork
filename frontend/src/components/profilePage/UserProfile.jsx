@@ -1,4 +1,3 @@
-// src/components/profilePage/UserProfile.jsx
 import React from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -7,12 +6,17 @@ import GenderIcon from './GenderIcon';
 dayjs.extend(relativeTime);
 
 const UserProfile = ({ user }) => {
-  const calculateRemainingTime = (birthday) => {
-    const nextBirthday = dayjs(birthday).year(dayjs().year());
-    if (nextBirthday.isBefore(dayjs())) {
-      nextBirthday.add(1, 'year');
+  const calculateDaysRemaining = (birthday) => {
+    const today = dayjs();
+    let nextBirthday = dayjs(birthday).year(today.year());
+    if (nextBirthday.isBefore(today)) {
+      nextBirthday = nextBirthday.add(1, 'year');
     }
-    return dayjs().to(nextBirthday, true);
+    return nextBirthday.diff(today, 'day');
+  };
+
+  const formatBirthday = (birthday) => {
+    return dayjs(birthday).format('DD/MM/YYYY');
   };
 
   return (
@@ -30,8 +34,8 @@ const UserProfile = ({ user }) => {
       </div>
       <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Birthday:</label>
-        <p className="text-md">{user.birthday}</p>
-        <p className="text-md text-gray-600">({calculateRemainingTime(user.birthday)} remaining)</p>
+        <p className="text-md">{formatBirthday(user.birthday)}</p>
+        <p className="text-md text-gray-600">({calculateDaysRemaining(user.birthday)} days remaining)</p>
       </div>
       <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Country:</label>
