@@ -31,3 +31,7 @@ export const getUsers = () => {
   const userData = getUserDataFromCookie();
   return userData && Array.isArray(userData.connections) ? userData.connections : []; // Return connections array or empty array
 };
+
+export const isAdmin = () => {
+  return true
+};

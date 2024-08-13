@@ -51,14 +51,14 @@ export const getEdgeColor = (key) => {
   switch (key) {
     case 'workplace': return 'orange';
     case 'hobby': return 'green';
-    case 'state': return 'purple';
+    case 'country': return 'purple';
     default: return 'gray';
   }
 };
 
 // Function to classify users based on common attributes
 export const classifyUsers = (users) => {
-  const commonAttributes = ['hobby', 'state', 'workplace'];
+  const commonAttributes = ['hobby', 'country', 'workplace'];
   const attributeDict = {};
 
   // Initialize dictionary with attributes as keys and empty objects as values
@@ -87,17 +87,17 @@ export const classifySpecificUser = (classifiedUsers, user) => {
   if (!user) { // Check if the user object is defined
     return {
       commonHobby: [],
-      commonState: [],
+      commonCountry: [],
       commonWorkplace: [],
     };
   }
 
   // Extract common hobby, state, and workplace connections
   const commonHobby = (classifiedUsers['hobby'] && classifiedUsers['hobby'][user.hobby]) || [];
-  const commonState = (classifiedUsers['state'] && classifiedUsers['state'][user.state]) || [];
+  const commonCountry = (classifiedUsers['country'] && classifiedUsers['country'][user.country]) || [];
   const commonWorkplace = (classifiedUsers['workplace'] && classifiedUsers['workplace'][user.workplace]) || [];
 
-  return { commonHobby, commonState, commonWorkplace };
+  return { commonHobby, commonCountry, commonWorkplace };
 };
 
 // Function to create nodes for the graph

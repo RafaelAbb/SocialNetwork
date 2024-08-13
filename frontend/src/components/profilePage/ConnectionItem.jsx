@@ -1,10 +1,11 @@
-// src/components/profilePage/ConnectionItem.jsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import GenderIcon from './GenderIcon';
 import ManImage from './Man.png';
 import WomanImage from './Woman.png';
+import { isAdmin } from '../common/User';
+import DeleteUserButton from './DeleteUserButton'; // Adjust the import path as necessary
 
 const getGenderImage = (gender) => {
   if (gender.toLowerCase() === 'male') {
@@ -40,12 +41,22 @@ const ConnectionItem = ({ connection }) => {
         </div>
         <span className="block text-sm text-gray-600">Email: {connection.email}</span>
         <span className="block text-sm text-gray-600">Hobby: {connection.hobby}</span>
-        <span className="block text-sm text-gray-600">Country: {connection.country}, City: {connection.city}</span>
+        <span className="block text-sm text-gray-600">Country: {connection.country}</span>
         <span className="block text-sm text-gray-600">Workplace: {connection.workplace}</span>
       </div>
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <FontAwesomeIcon icon={faEnvelope} className="text-4xl text-gray-800" />
       </div>
+      {/* Conditional rendering of the DeleteUserButton if the user is an admin */}
+      {isAdmin() && (
+        <div className="absolute right-2 bottom-2 mb-1 mr-1">
+          {/* Prevent click event propagation to the li element */}
+          <DeleteUserButton 
+            userMail={connection.email}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </li>
   );
 };
