@@ -16,7 +16,6 @@ const Menu = ({ onLogout }) => {
     { text: 'Home', view: 'home' },
     { text: 'About', view: 'about' },
     { text: 'Profile', view: 'profile' },
-    { text: 'Contact', view: 'contact' },
   ];
 
   const renderContent = () => {
@@ -27,8 +26,6 @@ const Menu = ({ onLogout }) => {
         return <GraphComponent />;
       case 'about':
         return <About />;
-      case 'contact':
-        return <div>Contact Page</div>;
       default:
         return <div>123</div>
     }
