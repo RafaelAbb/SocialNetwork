@@ -46,7 +46,7 @@ export const fetchHobbies = async () => {
               // Ensure the data is an array before processing
               if (Array.isArray(data)) {
                   // Create an array of workplace names
-                  const hobbies = data.map(item => item.hobby);
+                  const hobbies = data.map(item => item.activity);
                   console.log('Workplaces Array:', hobbies);
                   return hobbies; // Returning the array if needed
               } else {

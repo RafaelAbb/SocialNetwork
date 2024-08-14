@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import {fetchHobbies} from '../common/Properties'
-// Function to fetch or return the list of hobby options
-const getHobbies = () => {
-    //return ['Reading', 'Traveling', 'Cooking', 'Gaming']; // Replace this with actual fetch or logic to retrieve hobby options
-  return  fetchHobbies();
-};
+import { fetchHobbies } from '../common/Properties';
 
-const HobbyDropdown = ({onChange}) => {
+const HobbyDropdown = ({ onChange }) => {
   const [hobby, setHobby] = useState('');
   const [hobbies, setHobbies] = useState([]);
 
   useEffect(() => {
-    // Fetch or retrieve hobby options when component mounts
-    const hobbyList = getHobbies();
-    setHobbies(hobbyList);
+    const fetchHobbyOptions = async () => {
+      try {
+        const hobbyList = await fetchHobbies(); // Wait for the fetch to complete
+        console.log("Fetched hobbies:", hobbyList); // Log the fetched hobbies
+        if (Array.isArray(hobbyList)) {
+          setHobbies(hobbyList); // Set the fetched options to state
+        } else {
+          console.error("Fetched hobbies is not an array:", hobbyList);
+        }
+      } catch (error) {
+        console.error("Failed to fetch hobbies:", error);
+      }
+    };
+
+    fetchHobbyOptions(); // Call the async function
   }, []);
 
   const handleChange = (e) => {
     setHobby(e.target.value);
     if (onChange) {
-      onChange(e); // Call the passed onChange prop to notify the parent component
+      onChange(e); // Notify the parent component of the change
     }
   };
 
@@ -38,10 +45,10 @@ const HobbyDropdown = ({onChange}) => {
           value={hobby}
           onChange={handleChange}
         >
-          <option value="" disabled>Select Hobby</option> {/*placeholder */}
-          {hobbies.map((hobbyName, index) => (
-            <option key={index} value={hobbyName}>
-              {hobbyName}
+          <option value="" disabled>Select Hobby</option> {/* placeholder */}
+          {hobbies.map((hobbyOption, index) => (
+            <option key={index} value={hobbyOption}>
+              {hobbyOption}
             </option>
           ))}
         </select>

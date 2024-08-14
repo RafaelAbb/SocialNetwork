@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import {fetchWorkOptions} from '../common/Properties'
+import { fetchWorkOptions } from '../common/Properties';
 
-// Function to fetch or return the list of work options
-const getWorkOptions = () => {
-   return fetchWorkOptions(); // Replace this with actual fetch or logic to retrieve work options
-};
-
-const WorkDropdown = ({onChange}) => {
+const WorkDropdown = ({ onChange }) => {
   const [work, setWork] = useState('');
   const [workOptions, setWorkOptions] = useState([]);
 
   useEffect(() => {
-    // Fetch or retrieve work options when component mounts
-    const options = getWorkOptions();
-    setWorkOptions(options);
+    const fetchWorkOptionsAsync = async () => {
+      try {
+        const options = await fetchWorkOptions(); // Wait for the fetch to complete
+        console.log("Fetched work options:", options); // Log the fetched options
+        if (Array.isArray(options)) {
+          setWorkOptions(options); // Set the fetched options to state
+        } else {
+          console.error("Fetched work options is not an array:", options);
+        }
+      } catch (error) {
+        console.error("Failed to fetch work options:", error);
+      }
+    };
+
+    fetchWorkOptionsAsync(); // Call the async function
   }, []);
 
   const handleChange = (e) => {
     setWork(e.target.value);
     if (onChange) {
-      onChange(e); // Call the passed onChange prop to notify the parent component
+      onChange(e); // Notify the parent component of the change
     }
   };
 
@@ -36,9 +43,9 @@ const WorkDropdown = ({onChange}) => {
           className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
           id="grid-work"
           value={work}
-          onChange={handleChange}  // Use the internal handleChange method
+          onChange={handleChange} // Use the internal handleChange method
         >
-          <option value="" disabled>Select Work</option> {/*placeholder */}
+          <option value="" disabled>Select Work</option> {/* placeholder */}
           {workOptions.map((workOption, index) => (
             <option key={index} value={workOption}>
               {workOption}
