@@ -43,7 +43,7 @@ const UserProfile = ({ user }) => {
       </div>
       <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Country:</label>
-        <p className="text-md">{user.country}, {user.city}</p>
+        <p className="text-md">{user.country}</p>
       </div>
       <div className="mb-4">
         <label className="block text-lg font-bold mb-2">Workplace:</label>

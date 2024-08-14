@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import SignInPage from './components/signInPage/SignIn';
-import Menu from './components/common/Menu'; // Import the Home component
-import './index.css'; // Ensure this is the correct path
+import Menu from './components/common/Menu';
 import DarkLight from './components/DarkLight';
+import './index.css';
+import RegisterForm from './components/registerPage/RegisterForm';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignInClick = () => {
     setIsAuthenticated(true);
+    navigate('/menu/home'); // Navigate to the menu's home view
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    navigate('/signin'); // Redirect to the sign-in page after logout
   };
 
   return (
@@ -22,11 +27,32 @@ function App() {
       <div className="flex justify-end p-4 bg-white dark:bg-gray-800">
         <DarkLight />
       </div>
-      {!isAuthenticated ? (
-        <SignInPage onSignInClick={handleSignInClick} />
-      ) : (
-        <Menu onLogout={handleLogout} />
-      )}
+      <Routes>
+        <Route
+          path="/"
+          element={
+              <SignInPage onSignInClick={handleSignInClick} />
+          }
+        />
+        <Route
+          path="/signin"
+          element={<SignInPage onSignInClick={handleSignInClick} />}
+        />
+        <Route
+          path="/register"
+          element={<RegisterForm onSignInClick={handleSignInClick} />}
+        />
+        <Route
+          path="/menu/*"
+          element={
+            isAuthenticated ? (
+              <Menu onLogout={handleLogout} />
+            ) : (
+              <SignInPage onSignInClick={handleSignInClick} />
+            )
+          }
+        />
+      </Routes>
     </div>
   );
 }

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DarkLight from '../DarkLight';
 import CountryDropdown from './CountryDropdown';
 import WorkDropdown from './WorkDropdown';
-import HobbyDropdown from './HobbyDropdown.jsx';
-import SignInPage from '../signInPage/SignIn';
-
+import HobbyDropdown from './HobbyDropdown';
 
 const RegisterForm = () => {
   // State for form fields
@@ -20,6 +19,7 @@ const RegisterForm = () => {
   const [hobby, setHobby] = useState('');
   const [message, setMessage] = useState('');
   const [idError, setIdError] = useState('');
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -31,30 +31,28 @@ const RegisterForm = () => {
       return;
     }
 
-    alert(`The user: ${work} ${hobby} ${country} ${firstName}`);
-
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     // Prepare the payload
-    var raw = JSON.stringify({
-      "newFirstName": firstName,
-      "newLastName": lastName,
-      "newEmail": email,
-      "newIdNum": id,
-      "newCountry": country,
-      "newWorkplace": work,
-      "newHobby": hobby,
-      "newGender": gender,
-      "newPassword": password,
-      "newBirthdate": birthdate
+    const raw = JSON.stringify({
+      newFirstName: firstName,
+      newLastName: lastName,
+      newEmail: email,
+      newIdNum: id,
+      newCountry: country,
+      newWorkplace: work,
+      newHobby: hobby,
+      newGender: gender,
+      newPassword: password,
+      newBirthdate: birthdate,
     });
 
-    var requestOptions = {
+    const requestOptions = {
       method: 'POST',
       headers: myHeaders,
       body: raw,
-      redirect: 'follow'
+      redirect: 'follow',
     };
 
     try {
@@ -64,7 +62,8 @@ const RegisterForm = () => {
       if (response.status !== 200) {
         setMessage(`Error: ${result}`);
       } else {
-        alert('registerMessage', 'Registration successful! You can now sign in.');
+        alert('Registration successful! You can now sign in.');
+        navigate('/'); // Navigate to the home page after successful registration
       }
     } catch (error) {
       setMessage('Error: Registration failed. Please try again later.');
@@ -82,9 +81,14 @@ const RegisterForm = () => {
     }
   };
 
+  // Function to handle return button click
+  const handleReturnClicked = () => {
+    navigate('/'); // Navigate to the home page when return button is clicked
+  };
+
   return (
     <div className="flex flex-row justify-center items-center gap-4 mt-4">
-      <DarkLight /> {}
+      <DarkLight />
       <form className="w-full max-w-lg p-7 bg-white dark:bg-gray-800 shadow-md" name="SignUpPage" id="SignUpPage" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           {/* First Name */}
@@ -180,10 +184,17 @@ const RegisterForm = () => {
           {/* Submit Button */}
           <div className="w-full flex items-center justify-end mt-8 px-3">
             <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-gray-600  dark:hover:bg-gray-900 dark:text-gray-300  focus:border-gray-500"
-                type="submit"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-gray-600 dark:hover:bg-gray-900 dark:text-gray-300 focus:border-gray-500"
+              type="submit"
             >
               Register
+            </button>
+            <button
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-gray-600 dark:hover:bg-gray-900 dark:text-gray-300 focus:border-gray-500 ml-4"
+              type="button"
+              onClick={handleReturnClicked}
+            >
+              Return
             </button>
           </div>
         </div>
