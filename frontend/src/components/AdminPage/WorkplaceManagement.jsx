@@ -18,17 +18,72 @@ const WorkplaceManagement = () => {
     loadWorkplaces();
   }, []);
 
-  const handleAddWorkplace = () => {
+  const handleAddWorkplace = async() => {
     if (newWorkplace) {
-      setWorkplaces([...workplaces, newWorkplace]);
-      setNewWorkplace('');
       console.log(`Add workplace "${newWorkplace}"`);
+    
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    // Prepare the payload
+    const raw = JSON.stringify({
+      workplace: newWorkplace ,
+    });
+    const requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+    try {
+      const response = await fetch("https://web-course-backend-seven.vercel.app/api/workplaceUtil", requestOptions);
+      const result = await response.text();
+
+      if (response.status !== 200) {
+        alert(`Error: ${result}`);
+      } else {
+        alert('Adding successful!');
+        setWorkplaces([...workplaces, newWorkplace]);
+        //navigate('/'); // Navigate to the home page after successful registration
+      }
+    } catch (error) {
+      alert('Error: Adding failed. Please try again later.');
     }
   };
+  setNewWorkplace('');
+  };
 
-  const handleRemoveWorkplace = (workplaceToRemove) => {
-    setWorkplaces(workplaces.filter(workplace => workplace !== workplaceToRemove));
+  const handleRemoveWorkplace = async(workplaceToRemove) => {
     console.log(`Remove workplace "${workplaceToRemove}"`);
+
+    const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      // Prepare the payload
+      const raw = JSON.stringify({
+        workplace: workplaceToRemove,
+      });
+      const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+      try {
+        const response = await fetch("https://web-course-backend-seven.vercel.app/api/workplaceUtil", requestOptions);
+        const result = await response.text();
+  
+        if (response.status !== 200) {
+          alert(`Error: ${result}`);
+        } else {
+          alert('Deleting successful! ');
+          setWorkplaces(workplaces.filter(workplace => workplace !== workplaceToRemove));
+          console.log(`Remove workplaces "${workplaceToRemove}"`);
+          //navigate('/'); // Navigate to the home page after successful registration
+        }
+      } catch (error) {
+        alert('Error: Deleting failed. Please try again later.');
+      }
   };
 
   return (

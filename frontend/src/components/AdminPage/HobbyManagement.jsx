@@ -18,17 +18,75 @@ const HobbyManagement = () => {
     loadHobbies();
   }, []);
 
-  const handleAddHobby = () => {
+  const handleAddHobby = async () => {
     if (newHobby) {
-      setHobbies([...hobbies, newHobby]);
-      setNewHobby('');
+      setNewHobby(newHobby);
       console.log(`Add hobby "${newHobby}"`);
-    }
-  };
 
-  const handleRemoveHobby = (hobbyToRemove) => {
-    setHobbies(hobbies.filter(hobby => hobby !== hobbyToRemove));
-    console.log(`Remove hobby "${hobbyToRemove}"`);
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      // Prepare the payload
+      const raw = JSON.stringify({
+        activity: newHobby,
+      });
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+      try {
+        const response = await fetch("https://web-course-backend-seven.vercel.app/api/hobbiesUtil", requestOptions);
+        const result = await response.text();
+  
+        if (response.status !== 200) {
+          alert(`Error: ${result}`);
+        } else {
+          alert('Adding successful!');
+          setHobbies([...hobbies, newHobby]);
+          //navigate('/'); // Navigate to the home page after successful registration
+        }
+      } catch (error) {
+        alert('Error: Adding failed. Please try again later.');
+      }
+    };
+    setNewHobby('');
+
+
+    }
+  
+
+  const handleRemoveHobby = async(hobbyToRemove) => {
+   
+    const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      // Prepare the payload
+      const raw = JSON.stringify({
+        activity: hobbyToRemove,
+      });
+      const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+      try {
+        const response = await fetch("https://web-course-backend-seven.vercel.app/api/hobbiesUtil", requestOptions);
+        const result = await response.text();
+  
+        if (response.status !== 200) {
+          alert(`Error: ${result}`);
+        } else {
+          alert('Deleting successful!');
+          setHobbies(hobbies.filter(hobby => hobby !== hobbyToRemove));
+          console.log(`Remove hobby "${hobbyToRemove}"`);
+          //navigate('/'); // Navigate to the home page after successful registration
+        }
+      } catch (error) {
+        alert('Error: Deleting failed. Please try again later.');
+      }
   };
 
   return (
@@ -49,9 +107,11 @@ const HobbyManagement = () => {
       </ul>
       <div className="input-group mt-6">
         <input
+          id="AddHobbyTextBox"
           type="text"
           value={newHobby}
           onChange={(e) => setNewHobby(e.target.value)}
+
           placeholder="Enter New Hobby"
           className="flex-1 p-2 border border-gray-300 rounded-lg"
         />

@@ -1,15 +1,45 @@
 import React, { useState } from 'react';
-
+import {getUsers} from '../common/User'
 const UserManagement = () => {
-  const [users, setUsers] = useState([
-    { firstName: 'Hannah', lastName: 'Moore', email: 'hannah.moore@example.com' },
-    { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
-    { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com' },
-  ]);
 
-  const handleRemoveUser = (emailToRemove) => {
-    setUsers(users.filter(user => user.email !== emailToRemove));
-    console.log(`Remove user with email: ${emailToRemove}`);
+  const [users, setUsers] = useState(
+ /*   { firstName: 'Hannah', lastName: 'Moore', email: 'hannah.moore@example.com' },
+    { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
+    { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com' },*/
+    getUsers()
+  );
+  console.log("lst:",users);
+
+  const handleRemoveUser = async(emailToRemove) => {
+
+    const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      // Prepare the payload
+      const raw = JSON.stringify({
+        email: emailToRemove,
+      });
+      const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+      try {
+        const response = await fetch("https://web-course-backend-seven.vercel.app/api/adminUtil", requestOptions);
+        const result = await response.text();
+  
+        if (response.status !== 200) {
+          alert(`Error: ${result}`);
+        } else {
+          alert('Remove user successful!');
+          setUsers(users.filter(user => user.email !== emailToRemove));
+          console.log(`Remove user "${emailToRemove}"`);
+          //navigate('/'); // Navigate to the home page after successful registration
+        }
+      } catch (error) {
+        alert('Error: Remove user failed. Please try again later.');
+      }
   };
 
   return (
