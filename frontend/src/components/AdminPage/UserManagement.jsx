@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {getUsers} from '../common/User'
 const UserManagement = () => {
 
-  const [users, setUsers] = useState(
- /*   { firstName: 'Hannah', lastName: 'Moore', email: 'hannah.moore@example.com' },
-    { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
-    { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com' },*/
-    getUsers()
-  );
-  console.log("lst:",users);
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usersArray = await getUsers();
+      console.log("users in managment:", usersArray); // Log fetched users
+      setUsers(usersArray);
+    };
+
+    fetchUsers();
+  }, []);
+
+  
   const handleRemoveUser = async(emailToRemove) => {
 
     const myHeaders = new Headers();

@@ -13,13 +13,17 @@ const GraphComponent = () => {
   const [users, setUsers] = useState([]); // State for users
   const [filter, setFilter] = useState('all'); // State for filter
 
+
   
-  // Fetch users data when the component mounts
-  useEffect(() => {
-    const userData = getUsers();
-    console.log("Fetched users:", userData); // Log fetched users
-    setUsers(userData);
-  }, []);
+    useEffect(() => {
+      const fetchUsers = async () => {
+        const usersArray = await getUsers();
+        console.log("users in graph:", usersArray); // Log fetched users
+        setUsers(usersArray);
+      };
+  
+      fetchUsers();
+    }, []);
 
   // Render the graph whenever users or filter state changes
   useEffect(() => {
