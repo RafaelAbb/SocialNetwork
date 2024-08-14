@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import {fetchHobbies} from '../common/Properties'
 // Function to fetch or return the list of hobby options
 const getHobbies = () => {
-  return ['Reading', 'Traveling', 'Cooking', 'Gaming']; // Replace this with actual fetch or logic to retrieve hobby options
+    //return ['Reading', 'Traveling', 'Cooking', 'Gaming']; // Replace this with actual fetch or logic to retrieve hobby options
+  return  fetchHobbies();
 };
 
 const HobbyDropdown = ({onChange}) => {

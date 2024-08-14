@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {fetchCountries} from '../common/Properties'
 
 // Function to fetch or return the list of countries
 const getCountries = () => {
-  return ['Israel', 'USA', 'UK', 'Azerbaijan']; // Replace this with actual fetch or logic to retrieve countries
+  return fetchCountries();
 };
 
 const CountryDropdown = ({ onChange }) => {

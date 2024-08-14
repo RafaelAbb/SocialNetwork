@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+
 export const fetchWorkOptions = () => {
   // Simulate fetching work options, replace with actual API call
+
   return ['Engineer', 'Doctor', 'Teacher', 'Artist'];
 };
 
