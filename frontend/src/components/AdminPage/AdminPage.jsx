@@ -2,13 +2,17 @@ import React from 'react';
 import HobbyManagement from './HobbyManagement';
 import WorkplaceManagement from './WorkplaceManagement';
 import UserManagement from './UserManagement';
+import DarkLight from '../DarkLight';
 
 const AdminPage = () => {
   return (
-    <div className="admin-page p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-8">Admin Page</h1>
+    <div className="admin-page p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">Admin Page</h1>
+        <DarkLight /> {}
+      </div>
 
-      <div className="user-management mb-8 bg-white shadow-lg rounded-lg p-6">
+      <div className="user-management mb-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
         <HobbyManagement />
         <WorkplaceManagement />
         <UserManagement />
