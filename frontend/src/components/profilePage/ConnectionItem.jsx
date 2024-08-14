@@ -8,20 +8,26 @@ import { isAdmin } from '../common/User';
 import DeleteUserButton from './DeleteUserButton'; // Adjust the import path as necessary
 
 const getGenderImage = (gender) => {
-  if (gender.toLowerCase() === 'male') {
+  if (gender && gender.toLowerCase() === 'male') {
     return ManImage; // Use Man.png for male
-  } else if (gender.toLowerCase() === 'female') {
+  } else if (gender && gender.toLowerCase() === 'female') {
     return WomanImage; // Use Woman.png for female
   } else {
-    return null; // No image for other genders
+    return null; // No image for other genders or if gender is undefined
   }
 };
 
 const handleEmailClick = (email) => {
-  window.location.href = `mailto:${email}`;
+  if (email) {
+    window.location.href = `mailto:${email}`;
+  }
 };
 
 const ConnectionItem = ({ connection }) => {
+  if (!connection) {
+    return null; // Render nothing if connection is undefined or null
+  }
+
   return (
     <li
       className="relative mb-4 flex items-center p-4 border rounded-lg cursor-pointer group transition-shadow duration-200 shadow-sm hover:shadow-md"
@@ -37,12 +43,12 @@ const ConnectionItem = ({ connection }) => {
       <div className="flex-1 group-hover:blur-sm transition-all duration-200">
         <div className="flex justify-between items-center mb-1">
           <span className="block text-lg font-bold">{connection.firstName} {connection.lastName}</span>
-          <GenderIcon gender={connection.gender} />
+          {connection.gender && <GenderIcon gender={connection.gender} />}
         </div>
-        <span className="block text-sm text-gray-600">Email: {connection.email}</span>
-        <span className="block text-sm text-gray-600">Hobby: {connection.hobby}</span>
-        <span className="block text-sm text-gray-600">Country: {connection.country}</span>
-        <span className="block text-sm text-gray-600">Workplace: {connection.workplace}</span>
+        {connection.email && <span className="block text-sm text-gray-600">Email: {connection.email}</span>}
+        {connection.hobby && <span className="block text-sm text-gray-600">Hobby: {connection.hobby}</span>}
+        {connection.country && <span className="block text-sm text-gray-600">Country: {connection.country}</span>}
+        {connection.workplace && <span className="block text-sm text-gray-600">Workplace: {connection.workplace}</span>}
       </div>
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <FontAwesomeIcon icon={faEnvelope} className="text-4xl text-gray-800" />

@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {getUsers} from '../common/User'
 const UserManagement = () => {
 
-  const [users, setUsers] = useState(
- /*   { firstName: 'Hannah', lastName: 'Moore', email: 'hannah.moore@example.com' },
-    { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
-    { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com' },*/
-    getUsers()
-  );
-  console.log("lst:",users);
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usersArray = await getUsers();
+      console.log("users in managment:", usersArray); // Log fetched users
+      setUsers(usersArray);
+    };
+
+    fetchUsers();
+  }, []);
+
+  
   const handleRemoveUser = async(emailToRemove) => {
 
     const myHeaders = new Headers();
@@ -32,13 +37,11 @@ const UserManagement = () => {
         if (response.status !== 200) {
           alert(`Error: ${result}`);
         } else {
-          alert('Remove user successful!');
           setUsers(users.filter(user => user.email !== emailToRemove));
-          console.log(`Remove user "${emailToRemove}"`);
           //navigate('/'); // Navigate to the home page after successful registration
         }
       } catch (error) {
-        alert('Error: Remove user failed. Please try again later.');
+        alert('Error: Remove user failed from managment. Please try again later.');
       }
   };
 

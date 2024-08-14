@@ -26,9 +26,35 @@ export const getMe = () => {
 };
 
 // Function to get 'users' data (connections) from the parsed cookie data
-export const getUsers = () => {
-  const userData = getUserDataFromCookie();
-  return userData && Array.isArray(userData.connections) ? userData.connections : []; // Return connections array or empty array
+export const getUsers = async () => {
+  try {
+
+      const me = await getMe()
+      const username = me.id_num
+      const password = me.password
+      const response = await fetch(`https://web-course-backend-seven.vercel.app/api/login?id_num=${username}&password=${password}`);
+
+      // Check the status of the response
+      switch (response.status) {
+          case 200: // OK
+              const data = await response.json();
+              const users = data?.connections;
+              console.log('users Array:', users);
+              return users; // Returning array of users
+          case 404: // Not Found
+              console.error('Error: Data not found');
+              return []; // Return an empty array if data is not found
+          case 500: // Internal Server Error
+              console.error('Error: Server error');
+              return []; // Return an empty array if there is a server error
+          default: // Other status codes
+              console.error('Error: Unexpected status code:', response.status);
+              return []; // Return an empty array for any other unexpected status codes
+      }
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      return []; // Return an empty array if there is a fetch error
+  }
 };
 
 export const isAdmin = () => {
