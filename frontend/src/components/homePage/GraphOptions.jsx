@@ -2,22 +2,22 @@
 import { DataSet } from 'vis-network/standalone';
 
 // Function to get graph options
-export const getGraphOptions = () => ({
+export const getGraphOptions = (isDarkMode) => ({
   nodes: {
     shape: 'dot',
     size: 32,
     font: {
       size: 32,
-      color: '#314155',
+      color: isDarkMode ? '#D1D5DB' : '#314155', // Light: #314155, Dark: #D1D5DB (gray-300)
     },
     borderWidth: 2,
   },
   edges: {
     width: 3,
     color: {
-      color: '#848484',
-      highlight: '#848484',
-      hover: '#848484',
+      color: isDarkMode ? '#D1D5DB' : '#848484',      // Light: #848484, Dark: #D1D5DB (gray-300)
+      highlight: isDarkMode ? '#D1D5DB' : '#848484', // Light: #848484, Dark: #D1D5DB (gray-300)
+      hover: isDarkMode ? '#D1D5DB' : '#848484',     // Light: #848484, Dark: #D1D5DB (gray-300)
       opacity: 3,
     },
     smooth: {

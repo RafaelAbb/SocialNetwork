@@ -6,11 +6,14 @@ import FilterButtons from './FilterButtons';
 import Legend from './Legend';
 import { getMe, getUsers } from '../common/User';
 
+
+
 // Main graph component
 const GraphComponent = () => {
   const [users, setUsers] = useState([]); // State for users
   const [filter, setFilter] = useState('all'); // State for filter
 
+  
   // Fetch users data when the component mounts
   useEffect(() => {
     const userData = getUsers();
@@ -75,14 +78,14 @@ const GraphComponent = () => {
       new Network(container, data, options); // Create the graph
     };
 
-    renderGraph(users, filter); // Call renderGraph whenever users or filter state changes
+    renderGraph(users, filter); 
   }, [users, filter]);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <FilterButtons setFilter={setFilter} /> {/* Render filter buttons */}
-      <div id="network-graph" className="w-4/5 h-[500px] border-4 border-black mx-auto my-auto flex justify-center items-center"></div>
-      <Legend /> {/* Render legend */}
+      <div id="network-graph" className="w-4/5 h-[500px] border-4 border-black mx-auto my-auto flex justify-center items-center "></div>
+      <Legend /> {}
     </div>
   );
 };

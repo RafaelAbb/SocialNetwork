@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="max-w-4xl mx-auto p-6 min-h-screen">
             <h1 className="text-4xl font-bold text-center mb-8">About Us</h1>
             <p className="text-lg text-center mb-12">
                 We are a group of passionate software engineering students from Braude College, working together to develop a social network website as part of our web development course. Our team is made up of four dedicated individuals, each bringing their unique skills and experiences to the project.
