@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import countryList from 'react-select-country-list';
 
+
+// Function to fetch or return the list of countries
 export const getCountries = () => {
   const options = countryList().getData();
   return options.map(option => option.label);

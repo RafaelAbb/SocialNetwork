@@ -9,7 +9,6 @@ export const getUserDataFromCookie = () => {
   if (userData) {
     try {
       const parsedData = JSON.parse(userData);
-      console.log("parsed data: ", parsedData);
       return parsedData; // Return parsed data if successful
     } catch (error) {
       console.error('Error parsing userData cookie:', error);
@@ -33,5 +32,11 @@ export const getUsers = () => {
 };
 
 export const isAdmin = () => {
-  return true
+  //const me = getMe();
+
+  //console.log(JSON.stringify(me));
+  
+  //return me?.role === "Admin";
+
+  return true;
 };

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RegisterForm from '../registerPage/RegisterForm';
 import Cookies from 'js-cookie';
 import DarkLight from '../../components/DarkLight';
 
@@ -19,6 +18,9 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
       });
 
       if (response.status === 200) {
+        try{
+        } catch(error){};
+
         const data = await response.json();
         console.log("Data from server: ", data);
         Cookies.set('userData', JSON.stringify(data), { expires: 1 / 24, path: '/' });

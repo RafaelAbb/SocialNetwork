@@ -74,7 +74,7 @@ const RegisterForm = () => {
       setMessage('Error: Registration failed. Please try again later.');
     }
   };
-
+  
   // Function to handle ID input change
   const handleIDChange = (e) => {
     const value = e.target.value;
