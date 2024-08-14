@@ -3,7 +3,7 @@ import {fetchWorkOptions} from '../common/Properties'
 
 // Function to fetch or return the list of work options
 const getWorkOptions = () => {
-  return fetchWorkOptions(); // Replace this with actual fetch or logic to retrieve work options
+   return fetchWorkOptions(); // Replace this with actual fetch or logic to retrieve work options
 };
 
 const WorkDropdown = ({onChange}) => {
