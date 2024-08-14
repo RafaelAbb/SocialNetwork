@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import countryList from 'react-select-country-list';
 
 // Function to fetch or return the list of countries
-const getCountries = () => {
-  return ['Israel', 'USA', 'UK', 'Azerbaijan']; // Replace this with actual fetch or logic to retrieve countries
+export const getCountries = () => {
+  const options = countryList().getData();
+  return options.map(option => option.label);
 };
 
 const CountryDropdown = ({ onChange }) => {
