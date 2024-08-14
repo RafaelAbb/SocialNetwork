@@ -25,6 +25,11 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!firstName || !lastName || !email || !id || !password || !birthdate || !country || !work || !gender || !hobby) {
+      setMessage('Error: Please fill in all fields.');
+      return;
+    }
+
     // Check if ID is valid
     if (id.length !== 9 || !/^\d+$/.test(id)) {
       setIdError('ID must be 9 digits long and contain only numbers');
@@ -73,12 +78,9 @@ const RegisterForm = () => {
   // Function to handle ID input change
   const handleIDChange = (e) => {
     const value = e.target.value;
-    if (/^\d*$/.test(value) && value.length <= 9) {
-      setId(value);
-      setIdError('');
-    } else {
-      setIdError('ID must be 9 digits long and contain only numbers');
-    }
+    setId(value);
+    setIdError('');
+
   };
 
   // Function to handle return button click
@@ -172,13 +174,16 @@ const RegisterForm = () => {
               Gender
             </label>
             <div className="relative">
-              <select
-                className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
-                id="grid-gender" value={gender} onChange={(e) => setGender(e.target.value)}
-              >
-                <option>Female</option>
-                <option>Male</option>
-              </select>
+            <select
+              className="block appearance-none w-full bg-gray-200 dark:bg-gray-700 border border-gray-200 text-gray-700 dark:text-gray-300 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-600 focus:border-gray-500"
+              id="grid-gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="" disabled>Gender</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
             </div>
           </div>
           {/* Submit Button */}
