@@ -2,7 +2,8 @@ import React from 'react';
 import Cookies from 'js-cookie';
 
 const Logout = ({ onLogout }) => {
-  const buttonStyle = 'fixed top-4 right-4 bg-red-500 text-white p-2 rounded-lg shadow-lg hover:bg-red-600 duration-400';
+  const buttonStyle = 'ml-5 bg-red-500 text-white p-2 rounded-lg shadow-lg hover:bg-red-600 duration-400';
+
 
   const handleLogout = () => {
     // Delete the user data cookie

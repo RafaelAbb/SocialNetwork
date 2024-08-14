@@ -6,7 +6,6 @@ import DarkLight from '../../components/DarkLight';
 const SignInPage = ({ onSignInClick, onRegistered }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const SignInUser = async (e) => {
@@ -27,13 +26,10 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
 
         onSignInClick();
       } else if (response.status === 401) {
-        console.error('Error: Unauthorized. Incorrect username or password.');
         alert('Incorrect username or password. Please try again.');
       } else if (response.status === 404) {
-        console.error('Error: Not Found. The requested resource could not be found.');
-        alert('The requested resource could not be found.');
+        alert('Incorrect username or password. Please try again.');
       } else {
-        console.error('Error: An unexpected error occurred.');
         alert('An unexpected error occurred. Please try again later.');
       }
     } catch (error) {
@@ -79,13 +75,6 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
           />
         </div>
 
-        {message && (
-          <div className="mb-4">
-            <p className={`text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>
-              {message}
-            </p>
-          </div>
-        )}
 
         <div className="flex items-center justify-between">
           <button
