@@ -43,7 +43,6 @@ const HobbyManagement = () => {
         if (response.status !== 200) {
           alert(`Error: ${result}`);
         } else {
-          alert('Adding successful!');
           setHobbies([...hobbies, newHobby]);
           //navigate('/'); // Navigate to the home page after successful registration
         }
@@ -79,9 +78,7 @@ const HobbyManagement = () => {
         if (response.status !== 200) {
           alert(`Error: ${result}`);
         } else {
-          alert('Deleting successful!');
           setHobbies(hobbies.filter(hobby => hobby !== hobbyToRemove));
-          console.log(`Remove hobby "${hobbyToRemove}"`);
           //navigate('/'); // Navigate to the home page after successful registration
         }
       } catch (error) {

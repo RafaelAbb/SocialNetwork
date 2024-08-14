@@ -37,13 +37,11 @@ const UserManagement = () => {
         if (response.status !== 200) {
           alert(`Error: ${result}`);
         } else {
-          alert('Remove user successful!');
           setUsers(users.filter(user => user.email !== emailToRemove));
-          console.log(`Remove user "${emailToRemove}"`);
           //navigate('/'); // Navigate to the home page after successful registration
         }
       } catch (error) {
-        alert('Error: Remove user failed. Please try again later.');
+        alert('Error: Remove user failed from managment. Please try again later.');
       }
   };
 

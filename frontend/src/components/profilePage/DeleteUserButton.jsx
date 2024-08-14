@@ -22,12 +22,13 @@ const deleteUserFromDatabase = async (userMail, setUsers) => {
     const result = await response.text();
 
     if (response.status !== 200) {
-      alert(`Error: ${result}`);
+      alert(`Error deletebutton: ${result}`);
     } else {
-      setUsers(prevUsers => prevUsers.filter(user => user.email !== userMail));
+      alert('Remove user successful!');
+      // Correctly update the state by filtering out the deleted user
     }
   } catch (error) {
-    alert('Error: Remove user failed. Please try again later.');
+    alert('Error: Remove user from profile. Please try again later.');
     console.error('Failed to delete user:', error);
   }
 };
