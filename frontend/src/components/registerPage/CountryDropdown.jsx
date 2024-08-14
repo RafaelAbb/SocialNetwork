@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {fetchCountries} from '../common/Properties'
+import countryList from 'react-select-country-list';
 
-// Function to fetch or return the list of countries
-const getCountries = () => {
-  return fetchCountries();
+export const getCountries = () => {
+  const options = countryList().getData();
+  return options.map(option => option.label);
 };
 
 const CountryDropdown = ({ onChange }) => {
@@ -51,3 +51,5 @@ const CountryDropdown = ({ onChange }) => {
 };
 
 export default CountryDropdown;
+
+
