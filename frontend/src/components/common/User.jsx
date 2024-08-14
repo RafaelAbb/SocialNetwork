@@ -22,22 +22,21 @@ export const getUserDataFromCookie = () => {
 // Function to get 'me' data (user) from the parsed cookie data
 export const getMe = () => {
   const userData = getUserDataFromCookie();
-  console.log(`Got me ${userData?.user}`)
   return userData && userData.user ? userData.user : null; // Return user data or null
 };
 
 // Function to get 'users' data (connections) from the parsed cookie data
 export const getUsers = () => {
   const userData = getUserDataFromCookie();
-  console.log(`Got users ${userData?.connections}`)
   return userData && Array.isArray(userData.connections) ? userData.connections : []; // Return connections array or empty array
 };
 
 export const isAdmin = () => {
-  // const me = getMe();
-  // // Check if the user's role is 'admin'
-  // console.log("admin check")
-  // console.log(me)
-  // return me?.first === 'admin';
-  return true
+  //const me = getMe();
+
+  //console.log(JSON.stringify(me));
+  
+  //return me?.role === "Admin";
+
+  return true;
 };

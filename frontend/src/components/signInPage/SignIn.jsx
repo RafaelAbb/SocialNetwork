@@ -18,6 +18,9 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
       });
 
       if (response.status === 200) {
+        try{
+        } catch(error){};
+
         const data = await response.json();
         console.log("Data from server: ", data);
         // Store the JSON response as a cookie with 1 hour expiration
