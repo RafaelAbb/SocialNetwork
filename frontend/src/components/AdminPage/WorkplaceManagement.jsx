@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchWorkOptions } from '../common/Properties';
 
-const WorkplaceManagement = ({ userId, getWorks, handleAddWorkplace, handleRemoveWorkplace }) => {
+const WorkplaceManagement = () => {
+  const [workplaces, setWorkplaces] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState('');
+
+  useEffect(() => {
+    const loadWorkplaces = async () => {
+      try {
+        const workplacesData = await fetchWorkOptions();
+        setWorkplaces(workplacesData);
+      } catch (error) {
+        console.error('Failed to fetch workplaces:', error);
+      }
+    };
+
+    loadWorkplaces();
+  }, []);
+
+  const handleAddWorkplace = () => {
+    if (newWorkplace) {
+      setWorkplaces([...workplaces, newWorkplace]);
+      setNewWorkplace('');
+      console.log(`Add workplace "${newWorkplace}"`);
+    }
+  };
+
+  const handleRemoveWorkplace = (workplaceToRemove) => {
+    setWorkplaces(workplaces.filter(workplace => workplace !== workplaceToRemove));
+    console.log(`Remove workplace "${workplaceToRemove}"`);
+  };
 
   return (
     <div className="workplace-management mb-8">
       <h3 className="text-xl font-semibold mb-2">Workplace Management</h3>
       <ul className="space-y-4">
-        {getWorks().map((workplace, index) => (
+        {workplaces.map((workplace, index) => (
           <li key={index} className="flex items-center">
             <span className="flex-1 p-2">{workplace}</span>
             <button
@@ -28,7 +56,7 @@ const WorkplaceManagement = ({ userId, getWorks, handleAddWorkplace, handleRemov
           className="flex-1 p-2 border border-gray-300 rounded-lg"
         />
         <button
-          onClick={() => handleAddWorkplace(newWorkplace, userId)}
+          onClick={handleAddWorkplace}
           className="ml-4 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
         >
           Add Workplace
