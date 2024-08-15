@@ -22,7 +22,7 @@ export const getUserDataFromCookie = () => {
 // Function to get 'me' data (user) from the parsed cookie data
 export const getMe = () => {
   const userData = getUserDataFromCookie();
-  return userData && userData.user ? userData.user : null; // Return user data or null
+  return userData && userData ? userData : null; // Return user data or null
 };
 
 // Function to get 'users' data (connections) from the parsed cookie data

@@ -22,7 +22,7 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
 
         const data = await response.json();
         console.log("Data from server: ", data);
-        Cookies.set('userData', JSON.stringify(data), { expires: 1 / 24, path: '/' });
+        Cookies.set('userData', JSON.stringify(data.user), { expires: 1 / 24, path: '/' });
 
         onSignInClick();
       } else if (response.status === 401) {
