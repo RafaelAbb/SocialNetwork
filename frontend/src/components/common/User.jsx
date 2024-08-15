@@ -58,11 +58,11 @@ export const getUsers = async () => {
 };
 
 export const isAdmin = () => {
-  //const me = getMe();
+  const me = getMe();
 
-  //console.log(JSON.stringify(me));
+  console.log(JSON.stringify(me));
   
-  //return me?.role === "Admin";
+  return me?.firstName === "Gim ";
 
-  return true;
+  //return true;
 };
