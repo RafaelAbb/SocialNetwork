@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchWorkOptions } from '../common/Properties';
+import { addButtonStyle, inputBoxStyle, listItemStyle, removeButtonStyle } from './Utils';
 
 const WorkplaceManagement = () => {
   const [workplaces, setWorkplaces] = useState([]);
@@ -87,32 +88,32 @@ const WorkplaceManagement = () => {
   };
 
   return (
-    <div className="workplace-management mb-8">
+    <div className="workplace-management mb-12 py-3 border-b-2 dark:border-gray-700">
       <h3 className="text-xl font-semibold mb-2">Workplace Management</h3>
       <ul className="space-y-4">
         {workplaces.map((workplace, index) => (
-          <li key={index} className="flex items-center">
-            <span className="flex-1 p-2">{workplace}</span>
+          <li key={index} className={listItemStyle}>
+            <span className="flex-1 p-2 text-grey-800 font-medium">{workplace}</span>
             <button
               onClick={() => handleRemoveWorkplace(workplace)}
-              className="ml-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              className={removeButtonStyle}
             >
               Delete
             </button>
           </li>
         ))}
       </ul>
-      <div className="input-group mt-6">
+      <div className={"input-group mt-6"}>
         <input
           type="text"
           value={newWorkplace}
           onChange={(e) => setNewWorkplace(e.target.value)}
           placeholder="Enter New Workplace"
-          className="flex-1 p-2 border border-gray-300 rounded-lg"
+          className={inputBoxStyle}
         />
         <button
           onClick={handleAddWorkplace}
-          className="ml-4 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+          className={addButtonStyle}
         >
           Add Workplace
         </button>
