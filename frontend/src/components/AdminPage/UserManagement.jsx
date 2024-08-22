@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {getUsers} from '../common/User'
+import { listItemStyle, removeButtonStyle } from './Utils';
 const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
@@ -50,13 +51,13 @@ const UserManagement = () => {
       <h3 className="text-xl font-semibold mb-2">Users Management</h3>
       <ul className="space-y-4">
         {users.map((user, index) => (
-          <li key={index} className="flex items-center">
+          <li key={index} className={listItemStyle}>
             <span className="flex-1 p-2">
-              {user.firstName} {user.lastName} - {user.email}
+              <p className="flex-1 text-grey-800 font-bold">{user.firstName} {user.lastName}</p> <br></br> {user.email}
             </span>
             <button
               onClick={() => handleRemoveUser(user.email)}
-              className="ml-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+              className={removeButtonStyle}
             >
               Delete
             </button>
