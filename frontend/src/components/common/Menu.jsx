@@ -20,12 +20,11 @@ const Menu = ({ onLogout }) => {
 
   // Define menu styles for both small and large screens
   const menuStyle = `
-  fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out
-  ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-  sm:relative sm:translate-x-0 sm:w-auto sm:h-auto sm:bg-transparent sm:shadow-none
-  ${isMenuOpen ? 'flex flex-col' : 'hidden'}
-  sm:flex sm:flex-row sm:justify-center
-`;
+    fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out
+    sm:relative sm:translate-x-0 sm:w-auto sm:h-auto sm:bg-transparent sm:shadow-none
+    ${isMenuOpen ? 'translate-x-0 flex flex-col dark:bg-slate-600' : '-translate-x-full hidden dark:bg-slate-800'}
+    sm:flex sm:flex-row sm:justify-center
+  `;
 
 const menuItemStyle = `
   menu-item p-4 rounded-lg shadow-lg mb-2 
@@ -37,17 +36,19 @@ const menuItemStyle = `
   ${isMenuOpen ? 'w-full text-center' : 'w-auto sm:mx-4'}
 `;
 
+
+
   const overlayStyle = isMenuOpen ? 'fixed inset-0 bg-black opacity-50 z-40' : 'hidden';
 
   return (
     <div className="relative">
-      <Logout onLogout={onLogout} />
+      
       
       {/* Hamburger Menu Icon for small screens */}
       <div className="sm:hidden">
         <button 
           onClick={handleMenuToggle} 
-          className="text-gray-700 p-2 rounded-md focus:outline-none hover:bg-gray-200 transition ease-in-out duration-300 text-xl"
+          className="text-gray-700 p-2 rounded-md focus:outline-none hover:bg-gray-200 dark:hover:text-neutral-800 transition ease-in-out duration-300 text-xl dark:text-neutral-200"
         >
           ☰
         </button>
@@ -62,7 +63,9 @@ const menuItemStyle = `
           {isAdmin() && (
             <Link to="/menu/admin" className={menuItemStyle} onClick={handleMenuItemClick}>Admin</Link>
           )}
+          <Logout onLogout={onLogout} isMenuOpen={isMenuOpen} />
         </div>
+        
       </div>
       
       {/* Overlay */}
