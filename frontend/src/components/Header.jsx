@@ -10,8 +10,8 @@ const Header = () => {
   return (
     <div id="header" style={headerStyle}>
       <header>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>Social Network</h1>
-        <hr style={{ borderTop: '2px solid #4a5568', margin: '0.5rem auto', width: '100%', maxWidth: '768px' }} /> {}
+        <h1 className="text-4xl font-bold">Social Network</h1>
+        <hr className="border-t-2 border-gray-600 my-2 mx-auto w-full max-w-lg" />{} 
       </header>
     </div>
   );

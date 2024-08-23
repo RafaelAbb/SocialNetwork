@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DarkLight from '../DarkLight';
 import CountryDropdown from './CountryDropdown';
 import WorkDropdown from './WorkDropdown';
 import HobbyDropdown from './HobbyDropdown';
@@ -90,7 +89,6 @@ const RegisterForm = () => {
 
   return (
     <div className="flex flex-row justify-center items-center gap-4 mt-4">
-      <DarkLight />
       <form className="w-full max-w-lg p-7 bg-white dark:bg-gray-800 shadow-md" name="SignUpPage" id="SignUpPage" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           {/* First Name */}
