@@ -60,9 +60,7 @@ const menuItemStyle = `
           <Link to="/menu/home" className={menuItemStyle} onClick={handleMenuItemClick}>Home</Link>
           <Link to="/menu/about" className={menuItemStyle} onClick={handleMenuItemClick}>About</Link>
           <Link to="/menu/profile" className={menuItemStyle} onClick={handleMenuItemClick}>Profile</Link>
-          {isAdmin() && (
-            <Link to="/menu/admin" className={menuItemStyle} onClick={handleMenuItemClick}>Admin</Link>
-          )}
+          {isAdmin()?<Link to="/menu/admin" className={menuItemStyle} onClick={handleMenuItemClick}>Admin</Link>:<></>}
           <Logout onLogout={onLogout} isMenuOpen={isMenuOpen} />
         </div>
         
@@ -77,9 +75,7 @@ const menuItemStyle = `
           <Route path="home" element={<GraphComponent />} />
           <Route path="about" element={<About />} />
           <Route path="profile" element={<ProfilePage />} />
-          {isAdmin() && (
             <Route path="admin" element={<AdminPage />} />
-          )}
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </div>
