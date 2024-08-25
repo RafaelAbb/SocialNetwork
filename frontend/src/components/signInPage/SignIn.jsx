@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import DarkLight from '../../components/DarkLight';
 
 const SignInPage = ({ onSignInClick, onRegistered }) => {
   const [username, setUsername] = useState('');
@@ -45,7 +44,6 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
 
   return (
     <div className="flex flex-row justify-center min-h-screen dark:bg-gray-800">
-      <DarkLight />
       <form className="bg-white dark:bg-gray-800 shadow-md rounded px-4 pt-4 pb-4 mb-3 mt-4 max-w-xs h-1/2">
         <div className="mb-3">
           <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="username">
@@ -55,7 +53,7 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
             id="username"
             type="text"
             placeholder="Username"
-            className="dark:bg-gray-700 dark:text-gray-300-border shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 border-gray-300  leading-tight focus:outline-none focus:shadow-outline"
+            className="dark:bg-gray-700 dark:text-gray-300  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 border-gray-300  leading-tight focus:outline-none focus:shadow-outline"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -69,7 +67,7 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
             id="password"
             type="password"
             placeholder="********"
-            className="dark:bg-gray-700 dark:text-gray-300-border shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  bg-gray-100  border-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="dark:bg-gray-700 dark:text-gray-300 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  bg-gray-100  border-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

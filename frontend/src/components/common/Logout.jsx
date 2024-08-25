@@ -1,8 +1,15 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 
-const Logout = ({ onLogout }) => {
-  const buttonStyle = 'ml-5 bg-red-500 text-white p-2 rounded-lg shadow-lg hover:bg-red-600 duration-400';
+const Logout = ({ onLogout,isMenuOpen}) => {
+  const buttonStyle = `
+  p-4 rounded-lg shadow-lg mb-2
+  bg-red-500 text-white hover:bg-red-600 hover:text-red-100
+  border border-red-400 shadow-md
+  dark:bg-red-700 dark:text-white dark:hover:bg-red-600 dark:hover:text-gray-300
+  dark:border-red-500 dark:shadow-lg
+  duration-300 ease-in-out sm:mx-4
+  ${isMenuOpen? 'w-full text-center' : 'w-auto sm:mx-4'}`
 
 
   const handleLogout = () => {
