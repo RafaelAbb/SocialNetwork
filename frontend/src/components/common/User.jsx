@@ -34,8 +34,8 @@ export const getUsers = async () => {
       // console.log('Im the usernameeeeee (id_num)',username);
       //const password = me.password
       const response =await fetch( (me.rule === 'admin')? 
-    'http://localhost:3000/api/adminUtil' 
-    : `http://localhost:3000/api/userUtil?id_num=${username}`);
+    'https://web-course-backend-seven.vercel.app/api/adminUtil' 
+    : `https://web-course-backend-seven.vercel.app/api/userUtil?id_num=${username}`);
 
       // Check the status of the response
       switch (response.status) {
