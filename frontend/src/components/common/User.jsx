@@ -30,9 +30,12 @@ export const getUsers = async () => {
   try {
 
       const me = await getMe()
-      const username = me.id_num
-      const password = me.password
-      const response = await fetch(`https://web-course-backend-seven.vercel.app/api/login?id_num=${username}&password=${password}`);
+      const username = me.id_num;
+      // console.log('Im the usernameeeeee (id_num)',username);
+      //const password = me.password
+      const response =await fetch( (me.role === 'admin')? 
+    `https://web-course-backend-seven.vercel.app/api/adminUtil` 
+    : `https://web-course-backend-seven.vercel.app/api/userUtil?id_num=${username}`);
 
       // Check the status of the response
       switch (response.status) {
@@ -59,10 +62,5 @@ export const getUsers = async () => {
 
 export const isAdmin = () => {
   const me = getMe();
-
-  console.log(JSON.stringify(me));
-  
-  return me?.firstName === "Gim ";
-
-  //return true;
+  return me?.role === "admin";
 };
