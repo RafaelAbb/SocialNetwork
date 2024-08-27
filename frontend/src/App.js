@@ -6,6 +6,7 @@ import Menu from './components/common/Menu';
 import DarkLight from './components/DarkLight';
 import './index.css';
 import RegisterForm from './components/registerPage/RegisterForm';
+import { DarkModeProvider } from './components/context/DarkModeContext';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,6 +23,7 @@ function App() {
   };
 
   return (
+    <DarkModeProvider>
     <div className="bg-hero-pattern flex flex-col text-black dark:text-white bg-white dark:bg-gray-800">
       <Header />
       <div className="flex justify-end p-4 bg-white dark:bg-gray-800">
@@ -54,6 +56,7 @@ function App() {
         />
       </Routes>
     </div>
+    </DarkModeProvider>
   );
 }
 
