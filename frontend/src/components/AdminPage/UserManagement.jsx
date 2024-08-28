@@ -52,20 +52,25 @@ const UserManagement = () => {
     <div className="users-management mb-8">
       <h3 className="text-xl font-semibold mb-2">Users Management</h3>
       <ul className="space-y-4">
-        {users.map((user, index) => (
-          <li key={index} className={listItemStyle}>
-            <span className="flex-1 p-2">
-              <p className="flex-1 text-grey-800 font-bold">{user.firstName} {user.lastName}</p> <br></br> {user.email}
-            </span>
-            <button
-              onClick={() => handleRemoveUser(user.email)}
-              className={removeButtonStyle}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+  {users.map((user, index) => (
+    <li key={index} className={listItemStyle}>
+      <div className="flex flex-col md:flex-row md:items-center w-full">
+        <span className="flex-1 p-4">
+          <p className="text-gray-800 font-bold dark:text-gray-100">
+            {user.firstName} {user.lastName}
+          </p>
+          <p>{user.email}</p>
+        </span>
+        <button
+          onClick={() => handleRemoveUser(user.email)}
+          className={`${removeButtonStyle} `}
+        >
+          Delete
+        </button>
+      </div>
+    </li>
+  ))}
+</ul>
     </div>
   );
 };
