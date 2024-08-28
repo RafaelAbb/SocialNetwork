@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchHobbies } from '../common/Properties';
 import { listItemStyle,inputBoxStyle, addButtonStyle, removeButtonStyle } from './Utils';
 
+
+/**Users can add or remove hobbies, and the component handles the interaction with a  server to fetch the hobbies list */
 const HobbyManagement = () => {
   const [hobbies, setHobbies] = useState([]);
   const [newHobby, setNewHobby] = useState('');
