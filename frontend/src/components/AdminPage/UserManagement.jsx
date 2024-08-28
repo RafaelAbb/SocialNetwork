@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {getUsers} from '../common/User'
 import { listItemStyle, removeButtonStyle } from './Utils';
+
+/**It allows administrators to view users and remove them from the system. */
 const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
