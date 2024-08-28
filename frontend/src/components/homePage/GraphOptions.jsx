@@ -2,23 +2,23 @@
 import { DataSet } from 'vis-network/standalone';
 
 // Function to get graph options
-export const getGraphOptions = (isDarkMode) => ({
+export const getGraphOptions = ({ isDarkMode }) => ({
   nodes: {
     shape: 'dot',
     size: 32,
     font: {
       size: 32,
-      color: isDarkMode ? '#D1D5DB' : '#314155', // Light: #314155, Dark: #D1D5DB (gray-300)
+      color: isDarkMode ? '#D1D5DB' : '#314155', // Adjusted font color for dark mode
     },
     borderWidth: 2,
   },
   edges: {
     width: 3,
     color: {
-      color: isDarkMode ? '#D1D5DB' : '#848484',      // Light: #848484, Dark: #D1D5DB (gray-300)
-      highlight: isDarkMode ? '#D1D5DB' : '#848484', // Light: #848484, Dark: #D1D5DB (gray-300)
-      hover: isDarkMode ? '#D1D5DB' : '#848484',     // Light: #848484, Dark: #D1D5DB (gray-300)
-      opacity: 3,
+      color: isDarkMode ? '#D1D5DB' : '#848484',
+      highlight: isDarkMode ? '#D1D5DB' : '#848484',
+      hover: isDarkMode ? '#D1D5DB' : '#848484',
+      opacity: 0.8, // Adjusted opacity for better visual clarity
     },
     smooth: {
       type: 'dynamic',
@@ -48,33 +48,30 @@ export const getGraphOptions = (isDarkMode) => ({
 
 // Function to get edge color based on attribute
 export const getEdgeColor = (key) => {
-  switch (key) {
-    case 'workplace': return 'orange';
-    case 'hobby': return 'green';
-    case 'country': return 'purple';
-    default: return 'gray';
-  }
+  const colorMap = {
+    workplace: 'orange',
+    hobby: 'green',
+    country: 'purple',
+  };
+  return colorMap[key] || 'gray';
 };
 
 // Function to classify users based on common attributes
 export const classifyUsers = (users) => {
-  const commonAttributes = ['hobby', 'country', 'workplace'];
-  const attributeDict = {};
+  const attributeDict = {
+    hobby: {},
+    country: {},
+    workplace: {},
+  };
 
-  // Initialize dictionary with attributes as keys and empty objects as values
-  commonAttributes.forEach(attr => {
-    attributeDict[attr] = {};
-  });
-
-  // Classify users based on common attributes
   users.forEach(user => {
-    commonAttributes.forEach(attr => {
-      const userAttributeValue = user[attr];
-      if (userAttributeValue) { // Ensure the attribute value is not null or undefined
-        if (!attributeDict[attr][userAttributeValue]) {
-          attributeDict[attr][userAttributeValue] = [];
+    Object.keys(attributeDict).forEach(attr => {
+      const value = user[attr];
+      if (value) {
+        if (!attributeDict[attr][value]) {
+          attributeDict[attr][value] = [];
         }
-        attributeDict[attr][userAttributeValue].push(user);
+        attributeDict[attr][value].push(user);
       }
     });
   });
@@ -84,7 +81,7 @@ export const classifyUsers = (users) => {
 
 // Function to classify a specific user's connections by common attributes
 export const classifySpecificUser = (classifiedUsers, user) => {
-  if (!user) { // Check if the user object is defined
+  if (!user) {
     return {
       commonHobby: [],
       commonCountry: [],
@@ -92,34 +89,41 @@ export const classifySpecificUser = (classifiedUsers, user) => {
     };
   }
 
-  // Extract common hobby, state, and workplace connections
-  const commonHobby = (classifiedUsers['hobby'] && classifiedUsers['hobby'][user.hobby]) || [];
-  const commonCountry = (classifiedUsers['country'] && classifiedUsers['country'][user.country]) || [];
-  const commonWorkplace = (classifiedUsers['workplace'] && classifiedUsers['workplace'][user.workplace]) || [];
+  const commonHobby = classifiedUsers.hobby?.[user.hobby] || [];
+  const commonCountry = classifiedUsers.country?.[user.country] || [];
+  const commonWorkplace = classifiedUsers.workplace?.[user.workplace] || [];
 
   return { commonHobby, commonCountry, commonWorkplace };
 };
 
 // Function to create nodes for the graph
 export const createNodes = (users, me) => {
-  return new DataSet([
-    ...users.map(user => ({
-      id: user.id_num,
-      label: `${user.firstName} ${user.lastName}`
-    })),
-    { id: me.id_num, label: 'Me', color: { background: 'red', border: 'black' }, size: 30 }
-  ]);
+  const nodes = users.map(user => ({
+    id: user.id_num,
+    label: `${user.firstName} ${user.lastName}`,
+  }));
+
+  nodes.push({
+    id: me.id_num,
+    label: 'Me',
+    color: { background: 'red', border: 'black' },
+    size: 30,
+  });
+
+  return new DataSet(nodes);
 };
 
 // Function to create an edge between two users with a specified color
 export const connectEdge = (edges, user1, user2, color) => {
-  edges.add({ from: user1.id_num, to: user2.id_num, color: { color, inherit: false, opacity: 2 } });
+  edges.add({
+    from: user1.id_num,
+    to: user2.id_num,
+    color: { color, inherit: false, opacity: 0.8 }, // Adjusted opacity
+  });
 };
 
 // Function to add edges to 'me' from a list of users
 export const addEdgesToMe = (edges, me, users, color) => {
   if (!users) return;
-  users.forEach(user => {
-    connectEdge(edges, me, user, color);
-  });
+  users.forEach(user => connectEdge(edges, me, user, color));
 };
