@@ -12,6 +12,7 @@ Using this platform they can really get to know their common intrest people.
 - [Running the Project](#running-the-project)
 - [Code Structure (Frondend)](#code-structure-frondend)
 - [Code Structure (Backend)](#code-structure-backend)
+- [Main Files](#main-files)
 - [API Endpoints](#api-endpoints)
 - [Usage](#usage)
 - [Example Code](#example-code)
@@ -109,7 +110,6 @@ or change `db_URI` in `lib/mongodb.js`
 ## Main Files
 
 ### Frondend Files
-### Main Files
 
 - **`Menu.jsx`**  
   Implements the sidebar or dropdown menu for navigation. This component is often used to toggle between different sections or features within the application.
