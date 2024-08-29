@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -6,6 +6,14 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  // Check for user data in cookies when the component mounts
+  useEffect(() => {
+    const userData = Cookies.get('userData');
+    if (userData) {
+      onSignInClick(); // Optionally trigger the sign-in callback
+    }
+  }, [onSignInClick]);
 
   const SignInUser = async (e) => {
     e.preventDefault();
@@ -16,17 +24,11 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
       });
 
       if (response.status === 200) {
-        try{
-        } catch(error){};
-
         const data = await response.json();
         console.log("Data from server: ", data);
         Cookies.set('userData', JSON.stringify(data.user), { expires: 1 / 24, path: '/' });
-
         onSignInClick();
-      } else if (response.status === 401) {
-        alert('Incorrect username or password. Please try again.');
-      } else if (response.status === 404) {
+      } else if (response.status === 401 || response.status === 404) {
         alert('Incorrect username or password. Please try again.');
       } else {
         alert('An unexpected error occurred. Please try again later.');
@@ -53,7 +55,7 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
             id="username"
             type="text"
             placeholder="Username"
-            className="dark:bg-gray-700 dark:text-gray-300  shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 border-gray-300  leading-tight focus:outline-none focus:shadow-outline"
+            className="dark:bg-gray-700 dark:text-gray-300 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 border-gray-300 leading-tight focus:outline-none focus:shadow-outline"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -67,12 +69,11 @@ const SignInPage = ({ onSignInClick, onRegistered }) => {
             id="password"
             type="password"
             placeholder="********"
-            className="dark:bg-gray-700 dark:text-gray-300 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  bg-gray-100  border-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="dark:bg-gray-700 dark:text-gray-300 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100 border-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
 
         <div className="flex items-center justify-between">
           <button
